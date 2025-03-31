@@ -1,6 +1,5 @@
 import React from 'react'
 import { useAuth } from '../../authContext/index.jsx'
-import homeHeader from "../header/home-header.jsx";
 const Home = () => {
     const { currentUser } = useAuth()
     return (
