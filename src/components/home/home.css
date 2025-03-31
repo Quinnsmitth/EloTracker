@@ -1,0 +1,11 @@
+/* Home.css */
+
+.home-container {
+    margin-top: 80px; /* Provides space for the fixed header */
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff; /* White text color */
+    padding: 20px;
+  }
+  
