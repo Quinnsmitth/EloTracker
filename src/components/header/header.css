@@ -7,7 +7,7 @@
   right: 0;
   height: 60px;
   border-bottom: 1px solid #ccc;
-  background: linear-gradient(90deg, #ffffff, #f3f4f6);
+  background: linear-gradient(90deg, #1c1c1c, #333);
   display: flex;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -24,7 +24,7 @@
   text-align: center;
   font-size: 24px;
   font-weight: bold;
-  color: #333;
+  color: #ffffff;
 }
 
 .navbar-right {
@@ -81,7 +81,7 @@
   left: 0;
   width: 250px;
   height: 100%;
-  background: #fff;
+  background: #1c1c1c;
   border-right: 1px solid #ccc;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
   transform: translateX(-100%);
