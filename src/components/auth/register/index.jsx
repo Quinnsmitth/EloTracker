@@ -16,12 +16,32 @@ const Register = () => {
     const { userLoggedIn } = useAuth()
 
     const onSubmit = async (e) => {
-        e.preventDefault()
-        if(!isRegistering) {
-            setIsRegistering(true)
-            await doCreateUserWithEmailAndPassword(email, password)
+        e.preventDefault();
+        console.log("Register button clicked"); // Debugging log
+
+        if (password !== confirmPassword) {
+            setErrorMessage("Passwords do not match!");
+            console.error("Passwords do not match!");
+            return;
         }
-    }
+
+        if (!isRegistering) {
+            setIsRegistering(true);
+            setErrorMessage(""); // Clear previous errors
+
+            try {
+                console.log("Attempting to create user...");
+                const userCredential = await doCreateUserWithEmailAndPassword(email, password);
+                console.log("User Registered:", userCredential.user); // Debugging log
+
+                navigate('/home'); // Redirect on success
+            } catch (error) {
+                console.error("Registration Error:", error.message); // Debugging log
+                setErrorMessage(error.message); // Show Firebase error message
+                setIsRegistering(false);
+            }
+        }
+    };
 
     return (
         <>
