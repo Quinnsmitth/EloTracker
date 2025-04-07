@@ -1,5 +1,5 @@
 # ELOTracker
-Client Group : D'Andre, Owen, Garen, Pierre
+Client Group : D'Andre, Owen, Garen, Pierre\n
 Development Group : Jack, Quinn, Ayden, George 
 <h1>
 Retrospective #1
