@@ -1,0 +1,22 @@
+.construction-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f3f4f6;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .construction-message h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .construction-message p {
+    font-size: 20px;
+    color: #666;
+  }
+  

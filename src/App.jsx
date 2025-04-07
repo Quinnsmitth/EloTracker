@@ -4,6 +4,12 @@ import Register from "./components/auth/register";
 
 import Header from "./components/header";
 import Home from "./components/home";
+import Footer from "./components/footer";
+
+import Chess from "./components/games/chess";
+import RockPaperScissors from "./components/games/rps";
+import RandomNumberGuesser from "./components/games/rng";
+
 
 import { AuthProvider } from "./authContext/index.jsx";
 import { useRoutes } from "react-router-dom";
@@ -26,12 +32,25 @@ function App() {
             path: "/home",
             element: <Home />,
         },
+        {
+            path: "/chess",
+            element: <Chess />,
+        },
+        {
+            path: "/rps",
+            element: <RockPaperScissors />,
+        },
+        {
+            path: "/rng",
+            element: <RandomNumberGuesser />,
+        }
     ];
     let routesElement = useRoutes(routesArray);
     return (
         <AuthProvider>
             <Header />
             <div className="w-full h-screen flex flex-col">{routesElement}</div>
+            <Footer />
         </AuthProvider>
     );
 }

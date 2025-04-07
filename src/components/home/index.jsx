@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../../authContext/index.jsx'
 import './Home.css'
 
@@ -10,9 +11,9 @@ const Home = () => {
         Hello {currentUser.displayName ? currentUser.displayName : currentUser.email}, you are now logged in.
       </p>
       <div className="game-grid">
-        <div className="game-card">Rock Paper Scissors</div>
-        <div className="game-card">Chess</div>
-        <div className="game-card">Random Number Guesser</div>
+        <Link to="/rps" className="game-card">Rock Paper Scissors</Link>
+        <Link to="/chess" className="game-card">Chess</Link>
+        <Link to="/rng" className="game-card">Random Number Guesser</Link>
       </div>
     </div>
   )

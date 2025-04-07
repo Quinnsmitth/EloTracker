@@ -21,7 +21,9 @@ const Header = () => {
             ☰
           </button>
         </div>
-        <div className="navbar-center">Bad Bishop</div>
+        <div className="navbar-center">
+          <Link to="/" className="navbar-brand">Bad Bishop</Link>
+        </div>
         <div className="navbar-right">
           {userLoggedIn ? (
             <button
