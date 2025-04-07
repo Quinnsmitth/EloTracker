@@ -8,3 +8,8 @@ Link : https://docs.google.com/document/d/1v9WU_fCmXwSxTEtE-jopK1nPhNPLiWGUjH-NT
 Sprint Demo: https://docs.google.com/document/d/1bZoc185YgZCFOatlsUx4-c3LEeDDlRRbUqKtFcPeZ1g/edit?usp=sharing <br />
 Goal: Achieve a working tech stack MVP with a react frontend and a database backend. <br />
 Class Diagram: https://drive.google.com/file/d/1Guwj6a0fYIemh6QSLXmv8MU-gbMjjqLr/view?usp=sharing <br />
+
+<h1>
+  Sprint 2
+</h1>
+New class diagram: https://drive.google.com/file/d/1Guwj6a0fYIemh6QSLXmv8MU-gbMjjqLr/view?usp=sharing <br />
