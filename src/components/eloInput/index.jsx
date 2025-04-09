@@ -1,103 +1,82 @@
-import React, { useEffect, useState } from 'react';
-import { firestore } from '../../firebase/firebase.js'; // Import your firebase config
-import { doc, getDoc } from 'firebase/firestore';
-import { auth } from '../../firebase/firebase.js'; // Import your Firebase Auth config
-import { onAuthStateChanged } from 'firebase/auth';
+import React, { useState } from 'react'
+import { useAuth } from '../../authContext'
+import { doc, updateDoc, getDoc } from 'firebase/firestore'
+import { firestore } from '../../firebase/firebase'
+//import './EloUpdater.css'
 
-const EloInputForm = () => {
-    const [playerId, setPlayerId] = useState(''); // State to hold the player ID
-    const [playerElo, setPlayerElo] = useState('');
-    const [opponentElo, setOpponentElo] = useState('');
-    const [didPlayerWin, setDidPlayerWin] = useState('');
-    const [playerData, setPlayerData] = useState(null);
-    const [error, setError] = useState('');
-    const [currentUserId, setCurrentUserId] = useState('');
+const EloInput = () => {
+    const { currentUser } = useAuth()
+    const [opponentElo, setOpponentElo] = useState('')
+    const [gameResult, setGameResult] = useState('win')
+    const [message, setMessage] = useState('')
+    const [loading, setLoading] = useState(false)
 
-    // Function to fetch player data from Firestore
-    const fetchPlayerData = async (id) => {
+    const K = 32
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+
         try {
-            const playerDoc = doc(firestore, 'players', id); // Use the player ID passed as a parameter
-            const playerSnapshot = await getDoc(playerDoc);
+            const playerRef = doc(firestore, 'Player', currentUser.uid)
+            const playerSnap = await getDoc(playerRef)
 
-            if (playerSnapshot.exists()) {
-                const data = playerSnapshot.data();
-                setPlayerData(data);
-                setPlayerElo(data.elo); // Set player ELO from fetched data
-            } else {
-                setError('No such player found!');
+            if (!playerSnap.exists()) {
+                setMessage('Player not found in database.')
+                return
             }
+
+            const playerData = playerSnap.data()
+            const currentElo = playerData.chessElo || 1000
+            const oppElo = parseInt(opponentElo)
+
+            const expectedScore = 1 / (1 + Math.pow(10, (oppElo - currentElo) / 400))
+            const actualScore = gameResult === 'win' ? 1 : 0
+            const newElo = Math.round(currentElo + K * (actualScore - expectedScore))
+
+            await updateDoc(playerRef, {
+                chessElo: newElo,
+            })
+
+            setMessage(`Elo updated! New Elo: ${newElo}`)
         } catch (error) {
-            setError('Error fetching player data: ' + error.message);
+            console.error('Elo update failed:', error)
+            setMessage('Error updating Elo.')
+        } finally {
+            setLoading(false)
         }
-    };
-
-    // UseEffect to check authentication state and fetch player data
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setCurrentUserId(user.uid); // Set current user ID
-                fetchPlayerData(user.uid); // Fetch player data using the logged-in user ID
-            } else {
-                setError('No user is currently logged in.');
-            }
-        });
-
-        return () => unsubscribe(); // Clean up the listener on unmount
-    }, []);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        // Validate input and submission logic here...
-        console.log({
-            playerElo: parseInt(playerElo, 10),
-            opponentElo: parseInt(opponentElo, 10),
-            winner: didPlayerWin === 'yes' ? 'Player' : 'Opponent',
-            loser: didPlayerWin === 'yes' ? 'Opponent' : 'Player',
-        });
-
-        // Reset form fields
-        setPlayerElo('');
-        setOpponentElo('');
-        setDidPlayerWin('');
-    };
+    }
 
     return (
-        <div>
-            <h2>Elo Score Submission</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {playerData && (
-                <div>
-                    <p>Player Name: {playerData.name}</p>
-                    <p>Player Elo: {playerData.elo}</p>
-                </div>
-            )}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>
-                        Opponent Elo Score:
-                        <input
-                            type="number"
-                            value={opponentElo}
-                            onChange={(e) => setOpponentElo(e.target.value)}
-                            required
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Did the Player Win?
-                        <select value={didPlayerWin} onChange={(e) => setDidPlayerWin(e.target.value)} required>
-                            <option value="">Select an option</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </label>
-                </div>
-                <button type="submit">Submit</button>
+        <div className="elo-updater-container">
+            <h2>Update Chess Elo</h2>
+            <form onSubmit={handleSubmit} className="elo-form">
+                <label>
+                    Opponent Elo:
+                    <input
+                        type="number"
+                        value={opponentElo}
+                        onChange={(e) => setOpponentElo(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Result:
+                    <select
+                        value={gameResult}
+                        onChange={(e) => setGameResult(e.target.value)}
+                    >
+                        <option value="win">Win</option>
+                        <option value="loss">Loss</option>
+                    </select>
+                </label>
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Updating...' : 'Update Elo'}
+                </button>
             </form>
+            {message && <p>{message}</p>}
         </div>
-    );
-};
+    )
+}
 
-export default EloInputForm;
+export default EloInput
