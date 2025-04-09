@@ -3,7 +3,7 @@ import { useAuth } from '../../authContext'
 import { doc, updateDoc, getDoc } from 'firebase/firestore'
 import { firestore } from '../../firebase/firebase'
 //import './EloUpdater.css'
-
+//input elo
 const EloInput = () => {
     const { currentUser } = useAuth()
     const [opponentElo, setOpponentElo] = useState('')
