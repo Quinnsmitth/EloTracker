@@ -1,6 +1,7 @@
 import React from 'react';
 import Login from "./components/auth/login";
 import Register from "./components/auth/register";
+import Profile from "./components/profile";
 
 import Header from "./components/header";
 import Home from "./components/home";
@@ -43,6 +44,10 @@ function App() {
         {
             path: "/rng",
             element: <RandomNumberGuesser />,
+        },
+        {
+            path: "/profile",
+            element: <Profile />,
         }
     ];
     let routesElement = useRoutes(routesArray);

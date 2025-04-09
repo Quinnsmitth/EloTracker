@@ -54,6 +54,9 @@ const Header = () => {
         <Link className="nav-link" to="/link2" onClick={toggleNav}>
           Link 2
         </Link>
+        <Link className="nav-link" to="/profile" onClick={toggleNav}>
+          Profile
+        </Link>
         {/* Add more links here as needed */}
       </div>
     </>
