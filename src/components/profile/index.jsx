@@ -9,6 +9,9 @@ const Profile = () => {
         <div className="profile-container">
             <h2>Profile</h2>
             <p>Email: {currentUser.displayName}</p>
+            <p>Chess Elo: 1500</p>
+            <p>Random Number Guesser Elo: 1500</p>
+            <p>Rock Papaer Scissors Elo: 1500</p>
         </div>
     )
 }
