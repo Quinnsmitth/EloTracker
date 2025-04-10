@@ -31,3 +31,29 @@
 .footer-links a:hover {
   color: #1d4ed8;
 }
+
+/* The hover zone is absolutely positioned in the bottom right of the footer */
+.footer-hover-zone {
+  position: absolute;
+  bottom: 0;   /* Anchored to the bottom of the footer */
+  right: 80px;    /* Anchored to the right of the footer */
+  width: 100px; /* This is the active "hover" area */
+  height: 100px;
+  cursor: pointer;
+  z-index: 101; /* Ensure it's on top of the footer content */
+}
+
+/* The image starts hidden (translated downward and transparent) */
+.footer-img {
+  width: 100px;  /* Adjust size as needed */
+  height: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* When hovering over the hover zone, the image slides up into view */
+.footer-hover-zone:hover .footer-img {
+  transform: translateY(0);
+  opacity: 1;
+}
