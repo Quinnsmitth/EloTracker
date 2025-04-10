@@ -57,9 +57,6 @@ const Header = () => {
         <Link className="nav-link" to="/profile" onClick={toggleNav}>
           Profile
         </Link>
-        <Link className="nav-link" to="/eloInput" onClick={toggleNav}>
-          ELO Input
-        </Link>
         {/* Add more links here as needed */}
       </div>
     </>

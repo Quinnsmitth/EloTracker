@@ -14,7 +14,6 @@ import RngInput from "./components/games/rng";
 
 import { AuthProvider } from "./authContext/index.jsx";
 import { useRoutes } from "react-router-dom";
-import EloInput from "./components/eloInput/index.jsx";
 
 function App() {
     const routesArray = [
@@ -50,10 +49,6 @@ function App() {
             path: "/profile",
             element: <Profile />,
         },
-        {
-            path: "/eloInput",
-            element: <EloInput />,
-        }
     ];
     let routesElement = useRoutes(routesArray);
     return (

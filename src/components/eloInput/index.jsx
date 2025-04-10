@@ -2,17 +2,13 @@ import React, { useState } from 'react'
 import { useAuth } from '../../authContext'
 import { doc, updateDoc, getDoc } from 'firebase/firestore'
 import { firestore } from '../../firebase/firebase'
-//import './EloUpdater.css'
-//input elo
-const EloInput = () => {
+const EloInput = ({type}) => {
     const { currentUser } = useAuth()
     const [opponentElo, setOpponentElo] = useState('')
     const [gameResult, setGameResult] = useState('win')
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(false)
-
     const K = 32
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -25,9 +21,8 @@ const EloInput = () => {
                 setMessage('Player not found in database.')
                 return
             }
-
             const playerData = playerSnap.data()
-            const currentElo = playerData.chessElo || 1000
+            const currentElo = playerData[type] || 1000
             const oppElo = parseInt(opponentElo)
 
             const expectedScore = 1 / (1 + Math.pow(10, (oppElo - currentElo) / 400))
@@ -35,7 +30,7 @@ const EloInput = () => {
             const newElo = Math.round(currentElo + K * (actualScore - expectedScore))
 
             await updateDoc(playerRef, {
-                chessElo: newElo,
+                [type]: newElo,
             })
 
             setMessage(`Elo updated! New Elo: ${newElo}`)
@@ -49,7 +44,7 @@ const EloInput = () => {
 
     return (
         <div className="elo-updater-container">
-            <h2>Update Chess Elo</h2>
+            <h2>Update {type} Elo</h2>
             <form onSubmit={handleSubmit} className="elo-form">
                 <label>
                     Opponent Elo:
