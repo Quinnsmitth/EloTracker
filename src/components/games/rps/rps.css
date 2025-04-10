@@ -1,23 +1,75 @@
-.construction-container {
-    margin-top: 0px; /* Provides space for the fixed header */
-    text-align: center;
-    padding: 20px;
-    background: #333;
+/* RngInput.css */
+.elo-updater-container {
     position: absolute;
-    top: 60px;
-    right: 0;
-    bottom: 70px;
-    left: 0;
-  }
-  
-  .construction-message h1 {
-    font-size: 48px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+    background-color: white;
+    border-radius: 20px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.elo-updater-container h2 {
+    font-size: 28px;
     margin-bottom: 20px;
     color: #333;
-  }
-  
-  .construction-message p {
-    font-size: 20px;
-    color: #666;
-  }
-  
+}
+
+.elo-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+}
+
+.elo-form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    color: #555;
+}
+
+.elo-form input,
+.elo-form select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+.elo-form button {
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.elo-form button:disabled {
+    background-color: #a5d6a7;
+    cursor: not-allowed;
+}
+
+.elo-form button:hover:not(:disabled) {
+    background-color: #45a049;
+}
+
+.elo-updater-container p {
+    margin-top: 15px;
+    color: #333;
+    font-weight: 500;
+}
+
