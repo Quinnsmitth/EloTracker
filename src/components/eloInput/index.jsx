@@ -3,6 +3,7 @@ import { useAuth } from '../../authContext'
 import { doc, updateDoc, getDoc } from 'firebase/firestore'
 import { firestore } from '../../firebase/firebase'
 const EloInput = ({type}) => {
+
     const { currentUser } = useAuth()
     const [opponentElo, setOpponentElo] = useState('')
     const [gameResult, setGameResult] = useState('win')
@@ -24,13 +25,17 @@ const EloInput = ({type}) => {
             const playerData = playerSnap.data()
             const currentElo = playerData[type] || 1000
             const oppElo = parseInt(opponentElo)
+            //let  n = playerData.gamesplayed
+            //n++
 
+            //let k = 40 - 10 * Math.log10(n + 1);
             const expectedScore = 1 / (1 + Math.pow(10, (oppElo - currentElo) / 400))
             const actualScore = gameResult === 'win' ? 1 : 0
             const newElo = Math.round(currentElo + K * (actualScore - expectedScore))
 
             await updateDoc(playerRef, {
                 [type]: newElo,
+                //gamesPlayed: n
             })
 
             setMessage(`Elo updated! New Elo: ${newElo}`)
