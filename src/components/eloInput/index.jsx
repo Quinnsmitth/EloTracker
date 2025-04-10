@@ -25,7 +25,7 @@ const EloInput = ({type}) => {
             const playerData = playerSnap.data()
             const currentElo = playerData[type] || 1000
             const oppElo = parseInt(opponentElo)
-            //let  n = playerData.gamesplayed
+            //let  n = playerData.gamesPlayed
             //n++
 
             //let k = 40 - 10 * Math.log10(n + 1);
