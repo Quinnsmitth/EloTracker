@@ -9,7 +9,6 @@ const EloInput = ({ gameType, winType, loseType }) => {
     const [gameResult, setGameResult] = useState('win');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
-    const K = 32;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,7 +26,6 @@ const EloInput = ({ gameType, winType, loseType }) => {
             const playerData = playerSnap.data();
             const currentElo = playerData[gameType] || 1000; // Use gameType for current Elo
             const oppElo = parseInt(opponentElo);
-
             // Initialize player wins and losses
             let playerWins = playerData[winType] || 0;
             let playerLoses = playerData[loseType] || 0;
@@ -44,6 +42,7 @@ const EloInput = ({ gameType, winType, loseType }) => {
             n++;
 
             // Calculate expected score and new Elo
+            let K = Math.max(16, 40 - 10 * Math.log10(n + 1))
             const expectedScore = 1 / (1 + Math.pow(10, (oppElo - currentElo) / 400));
             const actualScore = gameResult === 'win' ? 1 : 0;
             const newElo = Math.round(currentElo + K * (actualScore - expectedScore));
