@@ -1,12 +1,22 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-# Editor-based HTTP Client requests
-/httpRequests/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
-#metaDataFile
-../node_modules/.vite/
-../node_modules/.vite/deps/
-../node_modules/.vite/deps/_metadata.json
+# Node modules and environment
+node_modules/
+.env
+.env.* # optional if you use multiple env files
+package-lock.json # optional, read notes below
+
+# OS-specific system files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Vite / React build output
+dist/
+build/
+
+# VS Code or IDE settings
+.vscode/
+.idea/
