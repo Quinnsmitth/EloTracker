@@ -41,7 +41,7 @@ const Register = () => {
           chessElo: 1500,
           rpsElo: 1500,
           numberGuesserElo: 1500,
-          reports: '',  // Default value; update if needed
+          reports: null,  // Default value; update if needed
           userID: user.uid
         })
 
