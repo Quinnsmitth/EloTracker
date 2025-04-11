@@ -8,3 +8,5 @@
 /dataSources.local.xml
 #metaDataFile
 ../node_modules/.vite/
+../node_modules/.vite/deps/
+../node_modules/.vite/deps/_metadata.json
