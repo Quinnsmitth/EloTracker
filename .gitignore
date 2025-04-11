@@ -21,3 +21,5 @@ build/
 .vscode/
 .idea/node_modules/
 
+.idea/workspace.xml
+.idea/shelf/
