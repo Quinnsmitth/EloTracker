@@ -1,5 +1,4 @@
 import {auth} from "./firebase.js";
-
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -20,11 +19,15 @@ export const doSignInWithEmailAndPassword = (email, password) => {
 
 export const doSignInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-
-    // add user to firestore
-};
+    try {
+      // signInWithPopup returns a Promise that resolves to a user credential object
+      const userCredential = await signInWithPopup(auth, provider);
+      return userCredential;
+    } catch (error) {
+      console.error('Error in doSignInWithGoogle:', error.message);
+      throw error; // re-throw error to be handled in the caller
+    }
+  };
 
 export const doSignOut = () => {
     return auth.signOut();

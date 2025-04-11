@@ -33,23 +33,35 @@ const Login = () => {
       setIsSigningIn(true)
       try {
         const userCredential = await doSignInWithGoogle()
+        console.log('User Credential:', userCredential)
+        if (!userCredential) {
+          throw new Error('No user credential returned from Google sign-in.')
+        }
+
         const user = userCredential.user
+
+        console.log('additionalUserInfo:', userCredential.additionalUserInfo);
 
         // Check if a Player document exists for this user
         const playerRef = doc(firestore, 'Player', user.uid)
         const playerSnap = await getDoc(playerRef)
-        if (!playerSnap.exists()) {
+
+        if (userCredential.additionalUserInfo?.isNewUser || !playerSnap.exists()) {
           // If it doesn't, create one with default Elo scores
           await setDoc(playerRef, {
             email: user.email,
             chessElo: 1500,
             rpsElo: 1500,
             numberGuesserElo: 1500,
-            reports: '', // Update default value as needed
+            reports: null,
             userID: user.uid
-          })
+          });
           console.log('New Player document created for Google user.')
+        } else {
+          console.log('Player document already exists for this Google user.')
         }
+
+        Navigate('/home')
       } catch (error) {
         console.error('Google Sign-In Error:', error.message)
         setErrorMessage(error.message)
