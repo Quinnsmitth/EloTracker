@@ -7,9 +7,9 @@ import Header from "./components/header";
 import Home from "./components/home";
 import Footer from "./components/footer";
 
-import Chess from "./components/games/chess";
-import RockPaperScissors from "./components/games/rps";
-import RandomNumberGuesser from "./components/games/rng";
+import ChessInput from "./components/games/chess";
+import RpsInput from "./components/games/rps";
+import RngInput from "./components/games/rng";
 
 
 import { AuthProvider } from "./authContext/index.jsx";
@@ -35,20 +35,20 @@ function App() {
         },
         {
             path: "/chess",
-            element: <Chess />,
+            element: <ChessInput />,
         },
         {
             path: "/rps",
-            element: <RockPaperScissors />,
+            element: <RpsInput />,
         },
         {
             path: "/rng",
-            element: <RandomNumberGuesser />,
+            element: <RngInput />,
         },
         {
             path: "/profile",
             element: <Profile />,
-        }
+        },
     ];
     let routesElement = useRoutes(routesArray);
     return (

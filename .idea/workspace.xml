@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a60a1997-a2f1-4c02-b852-e0556ae92fef" name="Changes" comment="comments that implement k and formula for k to be implemented">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.vite/deps/_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.vite/deps/_metadata.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="JSX File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="db-calling" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Quinnsmitth&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Quinnsmitth/EloTracker.git&quot;,
+    &quot;accountId&quot;: &quot;4fb88770-c745-4031-9664-40a720d49450&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;Quinnsmitth&quot;,
+    &quot;repository&quot;: &quot;EloTracker&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Security Analysis" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2uxXOL4FFLyjHECezPVugylX72I" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.App.jsx.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.index.jsx.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;man-elo&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/components" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a60a1997-a2f1-4c02-b852-e0556ae92fef" name="Changes" comment="" />
+      <created>1743191166505</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743191166505</updated>
+      <workItem from="1743191167650" duration="1319000" />
+      <workItem from="1743192519303" duration="928000" />
+      <workItem from="1743194546812" duration="54000" />
+      <workItem from="1743195291920" duration="897000" />
+      <workItem from="1743214470617" duration="870000" />
+      <workItem from="1743355651648" duration="11000" />
+      <workItem from="1743359952963" duration="92000" />
+      <workItem from="1743360113496" duration="52000" />
+      <workItem from="1743428042040" duration="8000" />
+      <workItem from="1743428278604" duration="2884000" />
+      <workItem from="1743432284110" duration="502000" />
+      <workItem from="1743513963833" duration="1841000" />
+      <workItem from="1743524491488" duration="34000" />
+      <workItem from="1743603142245" duration="1278000" />
+      <workItem from="1743700429698" duration="846000" />
+      <workItem from="1743775186140" duration="157000" />
+      <workItem from="1743775781487" duration="12000" />
+      <workItem from="1744034846460" duration="2852000" />
+      <workItem from="1744207145812" duration="298000" />
+      <workItem from="1744305312327" duration="3252000" />
+      <workItem from="1744316215298" duration="70000" />
+    </task>
+    <task id="LOCAL-00001" summary="potential abomination">
+      <option name="closed" value="true" />
+      <created>1743191450478</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743191450478</updated>
+    </task>
+    <task id="LOCAL-00002" summary="potential abomination">
+      <option name="closed" value="true" />
+      <created>1743191490944</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743191490944</updated>
+    </task>
+    <task id="LOCAL-00003" summary="potential abomination">
+      <option name="closed" value="true" />
+      <created>1743192250687</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1743192250687</updated>
+    </task>
+    <task id="LOCAL-00004" summary="potential abomination">
+      <option name="closed" value="true" />
+      <created>1743192315508</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1743192315508</updated>
+    </task>
+    <task id="LOCAL-00005" summary="potential abomination">
+      <option name="closed" value="true" />
+      <created>1743192475562</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1743192475562</updated>
+    </task>
+    <task id="LOCAL-00006" summary="potential abomination">
+      <option name="closed" value="true" />
+      <created>1743193213093</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1743193213093</updated>
+    </task>
+    <task id="LOCAL-00007" summary="potential abomination">
+      <option name="closed" value="true" />
+      <created>1743193219021</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1743193219021</updated>
+    </task>
+    <task id="LOCAL-00008" summary="home header file created">
+      <option name="closed" value="true" />
+      <created>1743432190357</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1743432190357</updated>
+    </task>
+    <task id="LOCAL-00009" summary="home header file created">
+      <option name="closed" value="true" />
+      <created>1743432629215</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1743432629215</updated>
+    </task>
+    <task id="LOCAL-00010" summary="home header file created">
+      <option name="closed" value="true" />
+      <created>1743432693471</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1743432693471</updated>
+    </task>
+    <task id="LOCAL-00011" summary="better error handling on the sign up page with user help.">
+      <option name="closed" value="true" />
+      <created>1743701150218</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1743701150218</updated>
+    </task>
+    <task id="LOCAL-00012" summary="better error handling on the sign up page with user help.">
+      <option name="closed" value="true" />
+      <created>1744035022159</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1744035022159</updated>
+    </task>
+    <task id="LOCAL-00013" summary="better error handling on the sign up page with user help.">
+      <option name="closed" value="true" />
+      <created>1744035045868</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1744035045868</updated>
+    </task>
+    <task id="LOCAL-00014" summary="better error handling on the sign up page with user help.">
+      <option name="closed" value="true" />
+      <created>1744207262588</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1744207262588</updated>
+    </task>
+    <task id="LOCAL-00015" summary="generic chess input done">
+      <option name="closed" value="true" />
+      <created>1744307126025</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1744307126025</updated>
+    </task>
+    <task id="LOCAL-00016" summary="comments that implement k and formula for k to be implemented">
+      <option name="closed" value="true" />
+      <created>1744307949870</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1744307949870</updated>
+    </task>
+    <task id="LOCAL-00017" summary="comments that implement k and formula for k to be implemented">
+      <option name="closed" value="true" />
+      <created>1744308005861</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1744308005861</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="potential abomination" />
+    <MESSAGE value="home header file created" />
+    <MESSAGE value="better error handling on the sign up page with user help." />
+    <MESSAGE value="generic chess input done" />
+    <MESSAGE value="comments that implement k and formula for k to be implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="comments that implement k and formula for k to be implemented" />
+  </component>
+</project>

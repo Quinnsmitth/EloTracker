@@ -1,15 +1,13 @@
 import React from 'react'
+import EloInput from '../../eloInput' // Adjust path if needed
 import './chess.css'
 
-const UnderConstruction = () => {
-  return (
-    <div className="construction-container">
-      <div className="construction-message">
-        <h1>Under Construction</h1>
-        <p>This page is currently under construction. Please check back later.</p>
-      </div>
-    </div>
-  )
+const ChessInput = () => {
+    return (
+        <div className="elo-updater-wrapper">
+            <EloInput type="chessElo" />
+        </div>
+    )
 }
 
-export default UnderConstruction
+export default ChessInput
