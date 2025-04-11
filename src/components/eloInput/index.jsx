@@ -3,7 +3,7 @@ import { useAuth } from '../../authContext'
 import { doc, updateDoc, getDoc } from 'firebase/firestore'
 import { firestore } from '../../firebase/firebase'
 const EloInput = ({type}) => {
-
+// quinn
     const { currentUser } = useAuth()
     const [opponentElo, setOpponentElo] = useState('')
     const [gameResult, setGameResult] = useState('win')
