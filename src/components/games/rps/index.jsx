@@ -5,7 +5,7 @@ import './rps.css'
 const ChessInput = () => {
     return (
         <div className="elo-updater-wrapper">
-            <EloInput type="rpsElo" />
+            <EloInput gameType="rpsElo" loseType="rpsLoses" winType="rpsWins"/>
         </div>
     )
 }

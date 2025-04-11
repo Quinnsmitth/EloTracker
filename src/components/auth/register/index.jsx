@@ -42,7 +42,14 @@
             rpsElo: 1500,
             numberGuesserElo: 1500,
             reports: null,  // Default value; update if needed
-            userID: user.uid
+            userID: user.uid,
+            gamesPlayed: 0,
+            chessWins:0,
+            chessLoses:0,
+            rpsWins:0,
+            rpsLoses:0,
+            rngWins:0,
+            rngLoses:0
           })
 
           navigate('/home') // Redirect on success

@@ -71,6 +71,9 @@ const Profile = () => {
         <p>
           <strong>Random Number Guesser Elo:</strong> {playerData.numberGuesserElo}
         </p>
+        <p>
+          <strong>Games Played:</strong> {playerData.gamesPlayed}
+        </p>
       </div>
     </div>
   )

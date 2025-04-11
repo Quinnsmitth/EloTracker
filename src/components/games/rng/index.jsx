@@ -5,7 +5,7 @@ import './rng.css'
 const ChessInput = () => {
     return (
         <div className="elo-updater-wrapper">
-            <EloInput type="numberGuesserElo" />
+            <EloInput type="numberGuesserElo" loseType="rngLoses" winType="rngWins" />
         </div>
     )
 }

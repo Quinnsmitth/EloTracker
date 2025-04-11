@@ -5,7 +5,7 @@ import './chess.css'
 const ChessInput = () => {
     return (
         <div className="elo-updater-wrapper">
-            <EloInput type="chessElo" />
+            <EloInput gameType="chessElo" winType="chessWins" loseType="chessLoses"/>
         </div>
     )
 }
