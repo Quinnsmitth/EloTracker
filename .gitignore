@@ -20,4 +20,4 @@ build/
 # VS Code or IDE settings
 .vscode/
 .idea/node_modules/
-.env
+
