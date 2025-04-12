@@ -77,13 +77,13 @@ const Register = () => {
         {userLoggedIn && <Navigate to="/home" replace={true} />}
 
         <main className="w-full h-screen flex self-center place-content-center place-items-center">
-          <div className="register-container">
-            <div className="register-box">
+          <div className="login-container">
+            <div className="login-box">
               <div className="text-center mb-6">
                 <h3 className="text-gray-800 text-xl font-semibold sm:text-2xl">Create a New Account</h3>
               </div>
 
-              <form onSubmit={onSubmit} className="space-y-4">
+              <form onSubmit={onSubmit} className="space-y-5">
                 <div>
                   <label className="text-sm text-gray-600 font-bold">Email</label>
                   <input
@@ -92,7 +92,7 @@ const Register = () => {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:indigo-600 shadow-sm rounded-lg transition duration-300"
+                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg transition duration-300"
                   />
                 </div>
 
