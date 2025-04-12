@@ -4,6 +4,7 @@ import { useAuth } from '../../../authContext/index.jsx';
 import { doCreateUserWithEmailAndPassword } from '../../../firebase/auth.js';
 import { doc, setDoc, getDocs, collection, query, where } from 'firebase/firestore';
 import { firestore } from '../../../firebase/firebase.js';
+import "../AuthForm.css";
 
 const Register = () => {
   const navigate = useNavigate();

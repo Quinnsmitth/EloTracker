@@ -1,0 +1,114 @@
+/* Ensure that the html and body take up the full height of the screen */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Set up full height and width for body */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+}
+
+/* Center the form container using absolute positioning */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure it takes up full viewport height */
+    width: 100%;
+    position: relative; /* Allow absolute centering */
+}
+
+/* Form container with flexbox centering */
+.auth-form-container {
+    position: absolute; /* Center using absolute positioning */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Exact centering */
+    width: 100%;
+    max-width: 400px; /* Set a max width */
+    padding: 40px;
+    background-color: #f5f5f5; /* Light gray background */
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Align the children inside the container */
+}
+
+/* Header */
+.auth-form-container h3 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333; /* Dark text color for better readability */
+}
+
+/* Form styling */
+.auth-form-container .space-y-4 {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Input styling */
+.auth-form-container input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 10px;
+    margin-top: 5px;
+    background-color: #fff; /* White background for inputs */
+    color: #333; /* Dark text inside the inputs */
+}
+
+.auth-form-container input:focus {
+    border-color: #4CAF50; /* Green border on focus */
+    outline: none;
+}
+
+/* Label styling */
+.auth-form-container label {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    color: #555; /* Dark gray text for labels */
+}
+
+/* Button styling */
+.auth-form-container button {
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-form-container button:disabled {
+    background-color: #a5d6a7; /* Light green when disabled */
+    cursor: not-allowed;
+}
+
+.auth-form-container button:hover:not(:disabled) {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Error message styling */
+.auth-form-container .error-message {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Add some margin to the bottom of the form */
+.auth-form-container p {
+    margin-top: 15px;
+    color: #333; /* Dark gray for better readability */
+    font-weight: 500;
+}

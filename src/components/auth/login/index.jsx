@@ -4,6 +4,8 @@ import { doSignInWithEmailAndPassword, doSignInWithGoogle } from '../../../fireb
 import { useAuth } from '../../../authContext/index.jsx'
 import { doc, getDoc, setDoc, collection, query, where, getDocs } from 'firebase/firestore'
 import { firestore } from '../../../firebase/firebase.js'
+import '../AuthForm.css';
+
 
 const Login = () => {
   const { userLoggedIn } = useAuth()
