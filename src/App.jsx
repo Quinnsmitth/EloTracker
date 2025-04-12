@@ -14,6 +14,7 @@ import RngInput from "./components/games/rng";
 
 import { AuthProvider } from "./authContext/index.jsx";
 import { useRoutes } from "react-router-dom";
+import Leaderboard from "./components/leaderboard/index.jsx";
 
 function App() {
     const routesArray = [
@@ -49,6 +50,11 @@ function App() {
             path: "/profile",
             element: <Profile />,
         },
+        {
+            path: "/leaderboard",
+            element: <Leaderboard />,
+        },
+
     ];
     let routesElement = useRoutes(routesArray);
     return (
