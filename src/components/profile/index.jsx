@@ -9,23 +9,18 @@ const Profile = () => {
   const [playerData, setPlayerData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [selectedGame, setSelectedGame] = useState('chess') // default to Chess
 
   useEffect(() => {
     if (currentUser && currentUser.uid) {
       const fetchPlayerData = async () => {
         try {
-          console.log("Fetching player data for UID:", currentUser.uid)
-
-          // Create the document reference for the Player collection
           const docRef = doc(firestore, 'Player', currentUser.uid)
           const docSnap = await getDoc(docRef)
-          console.log("Document snapshot obtained:", docSnap)
 
           if (docSnap.exists()) {
-            console.log("Document data found:", docSnap.data())
             setPlayerData(docSnap.data())
           } else {
-            console.warn("No document exists for UID:", currentUser.uid)
             setError('No player data found.')
           }
         } catch (err) {
@@ -39,40 +34,78 @@ const Profile = () => {
     }
   }, [currentUser])
 
+  const handleGameChange = (e) => {
+    setSelectedGame(e.target.value)
+  }
+
+  const renderGameStats = () => {
+    if (!playerData) return null
+
+    switch (selectedGame) {
+      case 'rps':
+        return (
+            <>
+              <p><strong>Rock Paper Scissors Elo:</strong> {playerData.rpsElo ?? 0}</p>
+              <p><strong>Rock Paper Scissors Wins:</strong> {playerData.rpsWins ?? 0}</p>
+              <p><strong>Rock Paper Scissors Loses:</strong> {playerData.rpsLoses ?? 0}</p>
+            </>
+        )
+      case 'numberGuesser':
+        return (
+            <>
+              <p><strong>Random Number Guesser Elo:</strong> {playerData.numberGuesserElo ?? 0}</p>
+              <p><strong>Number Guesser Wins:</strong> {playerData.rngWins ?? 0}</p>
+              <p><strong>Number Guesser Loses:</strong> {playerData.rngLoses ?? 0}</p>
+            </>
+        )
+      case 'chess':
+        return (
+            <>
+              <p><strong>Chess Elo:</strong> {playerData.chessElo ?? 0}</p>
+              <p><strong>Chess Wins:</strong> {playerData.chessWins ?? 0}</p>
+              <p><strong>Chess Loses:</strong> {playerData.chessLoses ?? 0}</p>
+            </>
+        )
+      default:
+        return null
+    }
+  }
+
   if (loading) {
     return (
-      <div className="profile-container">
-        <p>Loading player data...</p>
-      </div>
+        <div className="profile-container">
+          <p>Loading player data...</p>
+        </div>
     )
   }
 
   if (error) {
     return (
-      <div className="profile-container">
-        <p className="error-message">{error}</p>
-      </div>
+        <div className="profile-container">
+          <p className="error-message">{error}</p>
+        </div>
     )
   }
 
   return (
-    <div className="profile-container">
-      <h1>Player Profile</h1>
-      <div className="profile-card">
-        <p>
-          <strong>Email:</strong> {playerData.email || currentUser.email}
-        </p>
-        <p>
-          <strong>Chess Elo:</strong> {playerData.chessElo}
-        </p>
-        <p>
-          <strong>Rock Paper Scissors Elo:</strong> {playerData.rpsElo}
-        </p>
-        <p>
-          <strong>Random Number Guesser Elo:</strong> {playerData.numberGuesserElo}
-        </p>
+      <div className="profile-container">
+        <h1>Player Profile</h1>
+        <div className="profile-card">
+          <p><strong>Username:</strong> {playerData.displayName || currentUser.displayName}</p>
+
+          <label htmlFor="game-select"><strong>Select Game:</strong></label>
+          <select id="game-select" value={selectedGame} onChange={handleGameChange}>
+            <option value="rps">Rock Paper Scissors</option>
+            <option value="numberGuesser">Random Number Guesser</option>
+            <option value="chess">Chess</option>
+          </select>
+
+
+          <div className="game-stats">
+            {renderGameStats()}
+          </div>
+        </div>
       </div>
-    </div>
   )
 }
 

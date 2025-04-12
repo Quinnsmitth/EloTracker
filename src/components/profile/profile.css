@@ -39,3 +39,7 @@
   color: red;
   font-size: 18px;
 }
+select {
+  color: black;
+  font-size: 1rem;
+}
