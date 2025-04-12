@@ -10,6 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh; /* Full height of the viewport */
+    color: black;
 }
 
 /* Center the form container using absolute positioning */
@@ -22,93 +23,92 @@ main {
     position: relative; /* Allow absolute centering */
 }
 
-/* Form container with flexbox centering */
-.auth-form-container {
-    position: absolute; /* Center using absolute positioning */
-    top: 50%;
+/* Form container with flexbox centering and white box around */
+.login-container {
+    top: 40%; /* Move the container up higher (was 45%) */
     left: 50%;
     transform: translate(-50%, -50%); /* Exact centering */
     width: 100%;
     max-width: 400px; /* Set a max width */
     padding: 40px;
-    background-color: #f5f5f5;
+    background-color: #fff; /* White background for the container */
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
     display: flex;
     flex-direction: column;
     align-items: center; /* Align the children inside the container */
+    position: relative; /* Allow white border to show */
+}
+
+/* Adding a separate box for white border */
+.login-container::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 20px;
+    border: 2px solid #fff; /* White border around the container */
+    z-index: -1; /* Place it behind the container */
 }
 
 /* Header */
-.auth-form-container h3 {
+.login-box h3 {
     text-align: center;
     font-size: 28px;
     margin-bottom: 20px;
-    color: #333; /* Dark text color for better readability */
+    color: #000; /* Black text for better readability */
 }
 
 /* Form styling */
-.auth-form-container .space-y-4 {
+.login-box .space-y-5 {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px; /* Increase the gap between form elements */
+    width: 100%;
 }
 
 /* Input styling */
-.auth-form-container input {
+.login-box input {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc; /* Light border */
     border-radius: 10px;
-    margin-top: 5px;
-    background-color: #fff; /* White background for inputs */
+    margin-top: 5px; /* Space between label and input */
+    background-color: #f5f5f5; /* Light background for inputs */
     color: #333; /* Dark text inside the inputs */
 }
 
-.auth-form-container input:focus {
+/* Adding space between label and input box */
+.login-box label {
+    margin-bottom: 10px; /* Increased space between label and input box */
+}
+
+/* Input focus effect */
+.login-box input:focus {
     border-color: #4CAF50; /* Green border on focus */
     outline: none;
 }
 
-/* Label styling */
-.auth-form-container label {
-    display: flex;
-    flex-direction: column;
+/* Submit button styling */
+.login-box button {
+    background-color: #28a745; /* Green background for submit button */
+    color: white; /* White text */
     font-size: 16px;
-    color: #555; /* Dark gray text for labels */
-}
-
-/* Button styling */
-.auth-form-container button {
+    font-weight: bold;
     padding: 12px;
-    font-size: 16px;
     border: none;
     border-radius: 10px;
-    background-color: #4CAF50; /* Green background */
-    color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.auth-form-container button:disabled {
-    background-color: #a5d6a7; /* Light green when disabled */
+.login-box button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.login-box button:disabled {
+    background-color: #a1d8a5; /* Lighter green when disabled */
     cursor: not-allowed;
-}
-
-.auth-form-container button:hover:not(:disabled) {
-    background-color: #45a049; /* Darker green on hover */
-}
-
-/* Error message styling */
-.auth-form-container .error-message {
-    color: red;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Add some margin to the bottom of the form */
-.auth-form-container p {
-    margin-top: 15px;
-    color: #333; /* Dark gray for better readability */
-    font-weight: 500;
 }
