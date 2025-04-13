@@ -49,10 +49,13 @@ const Header = () => {
           &times;
         </button>
         <Link className="nav-link" to="/link1" onClick={toggleNav}>
-          Link 1
+          Chess Leaderboard
+        </Link>
+        <Link className="nav-link" to="/link1" onClick={toggleNav}>
+          Rock Paper Scissors Leaderboard
         </Link>
         <Link className="nav-link" to="/link2" onClick={toggleNav}>
-          Link 2
+          Random Number Guesser Leaderboard
         </Link>
         <Link className="nav-link" to="/profile" onClick={toggleNav}>
           Profile
