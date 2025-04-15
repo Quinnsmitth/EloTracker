@@ -27,6 +27,8 @@ const Leaderboard = () => {
                     ...doc.data()
                 }));
 
+                await new Promise((resolve) => setTimeout(resolve, 350))
+
                 setLeaders(topPlayers);
             } catch (error) {
                 console.error('Error fetching leaderboard:', error);
@@ -42,27 +44,29 @@ const Leaderboard = () => {
         <div className="leaderboard-container">
             <h2>Leaderboard</h2>
 
-            <select
-                value={gameType}
-                onChange={(e) => setGameType(e.target.value)}
-                className="leaderboard-select"
-            >
-                {gameOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                        {option.label}
-                    </option>
-                ))}
-            </select>
+            <div className="game-switch">
+            {gameOptions.map((option) => (
+                <button
+                key={option.value}
+                className={`game-button ${gameType === option.value ? 'active' : ''}`}
+                onClick={() => setGameType(option.value)}
+                >
+                {option.label}
+                </button>
+            ))}
+            </div>
+
 
             {loading ? (
                 <p className="leaderboard-loading">Loading leaderboard...</p>
             ) : (
-                <ol className="leaderboard-list">
-                    {leaders.map((player) => (
-                        <li key={player.id}>
-                            {player.displayName || 'Unnamed'} – {player[gameType] || 1000}
-                        </li>
-                    ))}
+                <ol key={gameType} className="leaderboard-list fade-in">
+                {leaders.map((player, index) => (
+                    <li key={player.id}>
+                    <span>{index + 1}. {player.displayName || 'Unnamed'}</span>
+                    <span>{player[gameType] || 1000}</span>
+                    </li>
+                ))}
                 </ol>
             )}
         </div>

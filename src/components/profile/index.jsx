@@ -91,19 +91,31 @@ const Profile = () => {
       <div className="profile-container">
         <h1>Player Profile</h1>
         <div className="profile-card">
-          <p><strong>Username:</strong> {playerData.displayName || currentUser.displayName}</p>
+        <p className="username">
+        <strong>Username:</strong> {playerData.displayName || currentUser.displayName}
+      </p>
+          <div className="game-switch">
+        {['chess', 'rps', 'numberGuesser'].map((game) => (
+          <button
+            key={game}
+            className={`game-button ${selectedGame === game ? 'active' : ''}`}
+            onClick={() => setSelectedGame(game)}
+          >
+            {{
+              chess: 'Chess',
+              rps: 'Rock Paper Scissors',
+              numberGuesser: 'Number Guesser'
+            }[game]}
+          </button>
+        ))}
+      </div>
 
-          <label htmlFor="game-select"><strong>Select Game:</strong></label>
-          <select id="game-select" value={selectedGame} onChange={handleGameChange}>
-            <option value="rps">Rock Paper Scissors</option>
-            <option value="numberGuesser">Random Number Guesser</option>
-            <option value="chess">Chess</option>
-          </select>
 
 
-          <div className="game-stats">
-            {renderGameStats()}
-          </div>
+      <div key={selectedGame} className="game-stats fade-in">
+        {renderGameStats()}
+      </div>
+
         </div>
       </div>
   )

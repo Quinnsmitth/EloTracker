@@ -91,11 +91,11 @@ const Login = () => {
         <div className="login-container">
           <div className="login-box">
             <div className="text-center">
-              <h3 className="text-gray-800 text-xl font-semibold sm:text-2xl">Welcome Back</h3>
+              <h3 className="text-gray-800 text-xl font-semibold sm:text-2xl">Welcome to Bad Bishop</h3>
             </div>
             <form onSubmit={onSubmit} className="space-y-5">
               <div>
-                <label className="text-sm text-gray-600 font-bold">Username or Email</label>
+                <label className="text-sm text-gray-600 font-bold">Username or Email  </label>
                 <input
                     type="text"
                     required
@@ -105,7 +105,7 @@ const Login = () => {
                 />
               </div>
               <div>
-                <label className="text-sm text-gray-600 font-bold">Password</label>
+                <label className="text-sm text-gray-600 font-bold">Password  </label>
                 <input
                     type="password"
                     autoComplete="current-password"
