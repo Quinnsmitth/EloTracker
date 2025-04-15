@@ -16,6 +16,10 @@ import { AuthProvider } from "./authContext/index.jsx";
 import { useRoutes } from "react-router-dom";
 import Leaderboard from "./components/leaderboard/index.jsx";
 
+import Admin from "./components/adminPage/index.jsx";
+import AdminRegister from "./components/auth/adminRegister/index.jsx";
+import AdminLogin from "./components/auth/adminLogin/index.jsx";
+
 function App() {
     const routesArray = [
         {
@@ -53,6 +57,18 @@ function App() {
         {
             path: "/leaderboard",
             element: <Leaderboard />,
+        },
+        {
+            path: "/admin",
+            element: <Admin />,
+        },
+        {
+            path: "/admin/register",
+            element: <AdminRegister />,
+        },
+        {
+            path: "/admin/login",
+            element: <AdminLogin />,
         },
 
     ];

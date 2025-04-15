@@ -34,11 +34,11 @@ const Header = () => {
             </button>
           ) : (
             <>
+              <Link classname="navbar-link" to="/admin/login">
+                Admin
+              </Link>
               <Link className="navbar-link" to="/login">
                 Login
-              </Link>
-              <Link className="navbar-link" to="/register">
-                Register New Account
               </Link>
             </>
           )}
