@@ -1,0 +1,121 @@
+.elo-updater-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    background: #f8fafc;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: sans-serif;
+  }
+  
+  .elo-updater-container h2 {
+    font-size: 1.5rem;
+    color: #1f2937;
+    margin-bottom: 1.25rem;
+  }
+  
+  .elo-form label {
+    display: block;
+    margin: 1rem 0 0.5rem;
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  .elo-input {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border 0.3s ease;
+  }
+  
+  .elo-input:focus {
+    border-color: #6366f1;
+  }
+  
+  .result-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .result-button {
+    padding: 0.5rem 1.25rem;
+    border: 2px solid transparent;
+    background: #e5e7eb;
+    color: #1f2937;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+  
+  /* Hover on unselected buttons */
+  .result-button:hover {
+    background: #d1d5db;
+  }
+  
+  /* Hover + active for "Yes" */
+  .result-button.selected-win {
+    background-color: #10b981;
+    color: white;
+    border-color: #059669;
+  }
+  .result-button.selected-win:hover {
+    background-color: #34d399; /* lighter green */
+  }
+  
+  /* Hover + active for "No" */
+  .result-button.selected-loss {
+    background-color: #ef4444;
+    color: white;
+    border-color: #dc2626;
+  }
+  .result-button.selected-loss:hover {
+    background-color: #f87171; /* lighter red */
+  }
+
+  /* Form background changes */
+  .elo-form.bg-green {
+    background-color: #bbf7d0; /* slightly darker green background */
+  }
+  
+  .elo-form.bg-red {
+    background-color: #fecaca; /* slightly darker red background */
+  }
+  
+  /* Buttons always have color */
+  .result-button {
+    padding: 0.5rem 1.25rem;
+    border: 2px solid transparent;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    color: white;
+  }
+  
+  /* Always green for YES */
+  .result-button.yes {
+    background-color: #10b981;
+  }
+  
+  .result-button.yes:hover {
+    background-color: #059669;
+  }
+  
+  /* Always red for NO */
+  .result-button.no {
+    background-color: #ef4444;
+  }
+  
+  .result-button.no:hover {
+    background-color: #dc2626;
+  }
+  
+  
+  

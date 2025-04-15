@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../authContext';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { firestore } from '../../firebase/firebase';
+import './eloInput.css'
 
 const EloInput = ({ gameType, winType, loseType }) => {
     const { currentUser } = useAuth();
@@ -65,36 +66,55 @@ const EloInput = ({ gameType, winType, loseType }) => {
     };
 
     return (
-        <div className="elo-updater-container">
-            <h2>Update {gameType} Elo</h2>
-            <form onSubmit={handleSubmit} className="elo-form">
-                <label>
-                    Opponent Elo:
-                    <input
-                        type="number"
-                        value={opponentElo}
-                        onChange={(e) => setOpponentElo(e.target.value)}
-                        required
-                        disabled={loading}
-                    />
-                </label>
-                <label>
-                    Result:
-                    <select
-                        value={gameResult}
-                        onChange={(e) => setGameResult(e.target.value)}
-                        disabled={loading}
-                    >
-                        <option value="win">Win</option>
-                        <option value="loss">Loss</option>
-                    </select>
-                </label>
-                <button type="submit" disabled={loading}>
-                    {loading ? 'Updating...' : 'Update Elo'}
-                </button>
-            </form>
-            {message && <p>{message}</p>}
+                <div className="elo-updater-container">
+        <h2>Update {gameType} Elo</h2>
+        <form
+        onSubmit={handleSubmit}
+        className={`elo-form ${gameResult === 'win' ? 'bg-green' : 'bg-red'}`}
+        >
+
+            <label htmlFor="opponentElo">Opponent Elo:</label>
+            <input
+            id="opponentElo"
+            type="number"
+            placeholder="Enter opponent's Elo"
+            value={opponentElo}
+            onChange={(e) => setOpponentElo(e.target.value)}
+            required
+            disabled={loading}
+            className="elo-input"
+            />
+
+            <label>Did you win?</label>
+            <div className="result-toggle">
+            <button
+                type="button"
+                className="result-button yes"
+                onClick={() => setGameResult('win')}
+                disabled={loading}
+            >
+                Yes
+            </button>
+            <button
+                type="button"
+                className="result-button no"
+                onClick={() => setGameResult('loss')}
+                disabled={loading}
+            >
+                No
+            </button>
+            </div>
+
+
+
+            <button type="submit" disabled={loading} className="submit-button">
+            {loading ? 'Updating...' : 'Update Elo'}
+            </button>
+        </form>
+
+        {message && <p className="elo-message">{message}</p>}
         </div>
+
     );
 };
 
