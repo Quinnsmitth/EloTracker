@@ -60,15 +60,18 @@ const Leaderboard = () => {
             {loading ? (
                 <p className="leaderboard-loading">Loading leaderboard...</p>
             ) : (
-                <ol key={gameType} className="leaderboard-list fade-in">
-                {leaders.map((player, index) => (
-                    <li key={player.id}>
-                    <span>{index + 1}. {player.displayName || 'Unnamed'}</span>
-                    <span>{player[gameType] || 1000}</span>
-                    </li>
-                ))}
-                </ol>
+                <div className="leaderboard-scroll-container">
+                    <ol key={gameType} className="leaderboard-list fade-in">
+                        {leaders.map((player, index) => (
+                            <li key={player.id}>
+                                <span>{index + 1}. {player.displayName || 'Unnamed'}</span>
+                                <span>{player[gameType] || 1000}</span>
+                            </li>
+                        ))}
+                    </ol>
+                </div>
             )}
+
         </div>
     );
 };

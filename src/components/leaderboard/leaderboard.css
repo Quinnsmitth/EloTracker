@@ -1,22 +1,50 @@
 /* Leaderboard.css */
 
 .leaderboard-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(to bottom right, #f9fafb, #e2e8f0);
+  border-radius: 1.5rem;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 
-    padding: 2rem;
-    background: linear-gradient(to bottom right, #f9fafb, #e2e8f0);
-    border-radius: 1.5rem;
-    max-width: 450px;
-    width: 90%;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  /* New properties to limit height and allow scrolling */
+  max-height: 90vh;       /* Prevents the container from exceeding 90% of the viewport height */
+  overflow-y: auto;       /* Enables vertical scroll if content overflows */
 }
+
+.leaderboard-scroll-container {
+  width: 100%;
+  max-height: 300px;  /* Adjust this height as needed */
+  overflow-y: auto;   /* Only the list will scroll */
+}
+
+/* Set the overall width of the scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Style the scrollbar thumb (slider) */
+::-webkit-scrollbar-thumb {
+  background: #ffffff;  /* white color */
+  border-radius: 10px;  /* optional: smooth, rounded corners */
+  border: 2px solid #ccc;  /* optional: creates a border for better visibility */
+}
+
+/* Optionally, style the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #ffffff;  /* light gray background for contrast */
+}
+
+
 
 .leaderboard-container h2 {
     font-size: 2rem;
