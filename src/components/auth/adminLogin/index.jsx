@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Navigate, Link, useNavigate } from 'react-router-dom'
-import { doSignInWithEmailAndPassword, doSignInWithGoogle } from '../../../firebase/auth.js'
+import { doSignInWithEmailAndPassword } from '../../../firebase/auth.js'
 import { useAuth } from '../../../authContext/index.jsx'
 import { doc, getDoc, setDoc, collection, query, where, getDocs } from 'firebase/firestore'
 import { firestore } from '../../../firebase/firebase.js'
@@ -47,39 +47,6 @@ const AdminLogin = () => {
     } catch (error) {
       console.error(error.message)
       setErrorMessage('Invalid credentials. Please try again.')
-      setIsSigningIn(false)
-    }
-  }
-
-  const onGoogleSignIn = async (e) => {
-    e.preventDefault()
-    if (isSigningIn) return
-    setIsSigningIn(true)
-    setErrorMessage('')
-
-    try {
-      const userCredential = await doSignInWithGoogle()
-      const user = userCredential.user
-
-      const adminRef = doc(firestore, 'Admin', user.uid)
-      const adminSnap = await getDoc(adminRef)
-
-      // If a new admin logged in via Google OR no admin document exists yet, create one.
-      if (userCredential.additionalUserInfo?.isNewUser || !adminSnap.exists()) {
-        await setDoc(adminRef, {
-          email: user.email,
-          // You can add additional admin-specific fields here
-          displayName: user.displayName || '',
-          role: 'admin', // Marking the user as admin
-          adminID: user.uid,
-        })
-        console.log('New Admin document created for Google user.')
-      }
-
-      navigate('/admin/dashboard')
-    } catch (error) {
-      console.error('Google Sign-In Error:', error.message)
-      setErrorMessage('Google sign-in failed. Please try again.')
       setIsSigningIn(false)
     }
   }
@@ -143,22 +110,8 @@ const AdminLogin = () => {
 
           <div className="flex flex-row text-center w-full">
             <div className="border-b-2 mb-2.5 mr-2 w-full"></div>
-            <div className="text-sm font-bold w-fit">OR</div>
             <div className="border-b-2 mb-2.5 ml-2 w-full"></div>
           </div>
-
-          <button
-            disabled={isSigningIn}
-            onClick={onGoogleSignIn}
-            className={`w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium ${
-              isSigningIn ? 'cursor-not-allowed' : 'hover:bg-gray-100 transition duration-300 active:bg-gray-100'
-            }`}
-          >
-            <svg className="w-5 h-5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Google Icon SVG content */}
-            </svg>
-            {isSigningIn ? 'Signing In...' : 'Continue with Google'}
-          </button>
         </div>
       </div>
     </main>
