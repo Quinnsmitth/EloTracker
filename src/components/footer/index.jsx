@@ -1,7 +1,7 @@
 import React from "react"
 import './Footer.css'
 import putnam from '../../assets/PutnamPrime.png'
-
+//import chooma from '../../assets/Chooma.png'
 const Footer = () => {
   return (
     <footer className="footer">
