@@ -25,13 +25,14 @@ main {
 
 /* Form container with flexbox centering and white box around */
 .login-container {
-    top: 40%; /* Move the container up higher (was 45%) */
+    position: absolute;
+    top: 50%; /* Move the container up higher (was 45%) */
     left: 50%;
     transform: translate(-50%, -50%); /* Exact centering */
-    width: 100%;
-    max-width: 400px; /* Set a max width
-    /* min-width: 400px; */ 
-    position: absolute; /* Corrected position property */
+    width: 90vw;
+    max-width: 400px; /* Set a max width */
+    min-width: 300px; 
+        
     padding: 40px;
     background-color: #fff; /* White background for the container */
     border-radius: 20px;
