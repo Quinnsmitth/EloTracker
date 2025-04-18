@@ -29,7 +29,7 @@ main {
     left: 50%;
     transform: translate(-50%, -50%); /* Exact centering */
     width: 100%;
-    max-width: 400px; /* Set a max width */
+    max-width: 500px; /* Set a max width */
     padding: 40px;
     background-color: #fff; /* White background for the container */
     border-radius: 20px;

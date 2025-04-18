@@ -46,6 +46,7 @@ const Admin = () => {
                   <th>Email</th>
                   <th>Wins</th>
                   <th>Losses</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -55,6 +56,7 @@ const Admin = () => {
                     <td>{p.email || '—'}</td>
                     <td>{p.wins || 0}</td>
                     <td>{p.losses || 0}</td>
+                    <td>Ban</td>
                   </tr>
                 ))}
               </tbody>
