@@ -37,7 +37,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center; /* Align the children inside the container */
-    position: relative; /* Allow white border to show */
+    position: absolute; /* Allow white border to show */
 }
 
 /* Adding a separate box for white border */
