@@ -1,6 +1,6 @@
 import React from 'react'
 import EloInput from '../../eloInput' // Adjust path if needed
-import './chess.css'
+import '../games.css'
 
 const ChessInput = () => {
     return (

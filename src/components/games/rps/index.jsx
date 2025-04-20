@@ -1,6 +1,6 @@
 import React from 'react'
 import EloInput from '../../eloInput'
-import './rps.css'
+import '../games.css'
 
 const ChessInput = () => {
     return (
