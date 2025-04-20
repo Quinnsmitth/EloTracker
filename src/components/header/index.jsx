@@ -79,36 +79,33 @@ const Header = () => {
         <button className="close-btn" onClick={toggleNav}>
           &times;
         </button>
+
         {userLoggedIn ? (
-            <>
+          <>
+            {!isAdmin && (
               <Link className="nav-link" to="/profile">
                 Profile
               </Link>
-              <Link className="nav-link" to="/leaderboard">
-                Leaderboard
+            )}
+            <Link className="nav-link" to="/leaderboard">
+              Leaderboard
+            </Link>
+            {isAdmin && (
+              <Link className="nav-link" to="/admin">
+                Admin
               </Link>
-              {/* Only show the admin link if the user is an admin */}
-              {isAdmin && (
-                <Link className="nav-link" to="/admin">
-                  Admin
-                </Link>
-              )}
-            </>
-          ) : (
-            <>
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-              <Link className="nav-link" to="/register">
-                Register
-              </Link>
-            </>
-          )}
-
-
-
-
-
+            )}
+          </>
+        ) : (
+          <>
+            <Link className="nav-link" to="/login">
+              Login
+            </Link>
+            <Link className="nav-link" to="/register">
+              Register
+            </Link>
+          </>
+        )}
       </div>
     </>
   )
