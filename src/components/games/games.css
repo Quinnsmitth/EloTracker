@@ -1,4 +1,16 @@
-/* RngInput.css */
+/* games.css */
+.game-container {
+    margin-top: 0px; /* Provides space for the fixed header */
+    text-align: center;
+    padding: 20px;
+    background: #333;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    bottom: 70px;
+    left: 0;
+  }
+
 .elo-updater-container {
     position: absolute;
     top: 50%;
