@@ -6,7 +6,7 @@ const ChessInput = () => {
     return (
         <div className="game-container">
             <div className="elo-updater-wrapper">
-                <EloInput gameType="Number Guesser" loseType="rngLoses" winType="rngWins" />
+                <EloInput gameType="numberGuesserElo" loseType="rngLoses" winType="rngWins" />
             </div>
         </div>
     )

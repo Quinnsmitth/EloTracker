@@ -7,7 +7,7 @@ const ChessInput = () => {
         <div className="game-container">
 
             <div className="elo-updater-wrapper">
-                <EloInput gameType="RPS" loseType="rpsLoses" winType="rpsWins"/>
+                <EloInput gameType="rpsElo" loseType="rpsLoses" winType="rpsWins"/>
             </div>
         </div>
     )
