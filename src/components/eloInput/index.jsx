@@ -10,6 +10,11 @@ const EloInput = ({ gameType, winType, loseType }) => {
     const [gameResult, setGameResult] = useState('win');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [reportReason, setReportReason] = useState('');
+    const [isReporting, setIsReporting] = useState(false);
+
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,6 +60,23 @@ const EloInput = ({ gameType, winType, loseType }) => {
                 [winType]: playerWins,
                 [loseType]: playerLoses
             });
+
+            if (isReporting && reportReason.trim()) {
+                try {
+                  const reportRef = collection(firestore, 'Reports')
+                  await addDoc(reportRef, {
+                    playerId: currentUser?.uid || 'anonymous',
+                    opponentElo: parseInt(opponentElo) || null,
+                    reason: reportReason.trim(),
+                    date: new Date(),
+                    gameType
+                  })
+                } catch (reportError) {
+                  console.error('Failed to submit report:', reportError)
+                  setMessage('Failed to submit report.');
+                }
+              }
+              
 
             setMessage(`Elo updated! New Elo: ${newElo}`);
         } catch (error) {
@@ -105,15 +127,36 @@ const EloInput = ({ gameType, winType, loseType }) => {
             </button>
             </div>
 
+            <div
+                className={`report-box ${isReporting ? 'active' : ''}`}
+                onClick={() => setIsReporting(!isReporting)}
+            >
+                {isReporting ? 'Cancel Report' : 'Report Opponent for Cheating'}
+            </div>
+
+            {isReporting && (
+                <textarea
+                placeholder="Explain why you're reporting this player…"
+                value={reportReason}
+                onChange={(e) => setReportReason(e.target.value)}
+                disabled={loading}
+                className="report-textarea"
+                />
+            )}
 
 
             <button type="submit" disabled={loading} className="submit-button">
             {loading ? 'Updating...' : 'Update Elo'}
             </button>
-        </form>
 
+            
+        </form>
+    
         {message && <p className="elo-message">{message}</p>}
         </div>
+
+        
+
 
     );
 };
