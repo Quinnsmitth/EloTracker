@@ -89,7 +89,7 @@ const EloInput = ({ gameType, winType, loseType }) => {
 
     return (
                 <div className="elo-updater-container">
-        <h2>Update {gameType} Elo</h2>
+        <h2>Update {gameType} </h2>
         <form
         onSubmit={handleSubmit}
         className={`elo-form ${gameResult === 'win' ? 'bg-green' : 'bg-red'}`}
