@@ -54,8 +54,8 @@ const Admin = () => {
                   <tr key={p.id}>
                     <td>{p.displayName || '—'}</td>
                     <td>{p.email || '—'}</td>
-                    <td>{p.wins || 0}</td>
-                    <td>{p.losses || 0}</td>
+                    <td>{p.chessWins || 0}</td>
+                    <td>{p.chessLoses || 0}</td>
                     <td>Ban</td>
                   </tr>
                 ))}
