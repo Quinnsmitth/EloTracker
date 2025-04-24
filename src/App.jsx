@@ -20,7 +20,7 @@ import Admin from "./components/adminPage/index.jsx";
 import AdminRegister from "./components/auth/adminRegister/index.jsx";
 import AdminLogin from "./components/auth/adminLogin/index.jsx";
 import UnityGame from "./components/games/chess/UnityChess.jsx";
-
+import "./App.css";
 function App() {
     const routesArray = [
         {
