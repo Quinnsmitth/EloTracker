@@ -3,10 +3,10 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 
 const UnityGame = () => {
     const { unityProvider } = useUnityContext({
-        loaderUrl: "builds/myunityapp.loader.js",
-        dataUrl: "builds/myunityapp.data",
-        frameworkUrl: "builds/myunityapp.framework.js",
-        codeUrl: "builds/myunityapp.wasm",
+        loaderUrl: "builds/ChessGame.loader.js",
+        dataUrl: "builds/ChessGame.data",
+        frameworkUrl: "builds/ChessGame.framework.js",
+        codeUrl: "builds/ChessGame.wasm",
     });
 
     return (
