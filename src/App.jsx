@@ -7,7 +7,7 @@ import Header from "./components/header";
 import Home from "./components/home";
 import Footer from "./components/footer";
 
-import ChessInput from "./components/games/chess";
+//import ChessInput from "./components/games/chess";
 import RpsInput from "./components/games/rps";
 import RngInput from "./components/games/rng";
 
@@ -19,6 +19,7 @@ import Leaderboard from "./components/leaderboard/index.jsx";
 import Admin from "./components/adminPage/index.jsx";
 import AdminRegister from "./components/auth/adminRegister/index.jsx";
 import AdminLogin from "./components/auth/adminLogin/index.jsx";
+import UnityGame from "./components/games/chess/UnityChess.jsx";
 
 function App() {
     const routesArray = [
@@ -40,7 +41,7 @@ function App() {
         },
         {
             path: "/chess",
-            element: <ChessInput />,
+            element: <UnityGame/>
         },
         {
             path: "/rps",

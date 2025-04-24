@@ -10,9 +10,11 @@ const UnityGame = () => {
     });
 
     return (
+
         <Unity
             unityProvider={unityProvider}
             style={{ width: "100%", height: "100%" }}
+
         />
     );
 };
