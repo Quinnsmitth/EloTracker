@@ -24,10 +24,6 @@ import "./App.css";
 function App() {
     const routesArray = [
         {
-            path: "*",
-            element: <Login />,
-        },
-        {
             path: "/login",
             element: <Login />,
         },
@@ -41,7 +37,7 @@ function App() {
         },
         {
             path: "/chess",
-            element: <UnityGame/>
+            element: <UnityGame />
         },
         {
             path: "/rps",
@@ -71,6 +67,10 @@ function App() {
             path: "/admin/login",
             element: <AdminLogin />,
         },
+        {
+            path: "*",
+            element: <Login />,
+        }
 
     ];
     let routesElement = useRoutes(routesArray);
