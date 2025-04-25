@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import "../games.css";
 const UnityGame = () => {
     const unityContainerRef = useRef(null);
 
@@ -9,13 +8,13 @@ const UnityGame = () => {
         script.onload = () => {
             window
                 .createUnityInstance(unityContainerRef.current, {
-                    dataUrl: "/UnityGame/Build/UnityGame.data.gz",
-                    frameworkUrl: "/UnityGame/Build/UnityGame.framework.js.gz",
-                    codeUrl: "/UnityGame/Build/UnityGame.wasm.gz",
+                    dataUrl: "/UnityGame/Build/UnityGame.data",
+                    frameworkUrl: "/UnityGame/Build/UnityGame.framework.js",
+                    codeUrl: "/UnityGame/Build/UnityGame.wasm",
                     streamingAssetsUrl: "StreamingAssets",
-                    companyName: "YourCompany",
-                    productName: "YourProduct",
-                    productVersion: "1.0",
+                    companyName: "BadBishop",
+                    productName: "BadChess",
+                    productVersion: ".1",
                 })
                 .then(() => {
                     console.log("Unity loaded!");
@@ -33,16 +32,13 @@ const UnityGame = () => {
 
 
     return (
-        <div className="game-container">
-            {/* This div will hold the Unity WebGL canvas */}
-            <div
-                ref={unityContainerRef} // Correctly setting the ref to the div
-                className="unity-container"
-                style={{ width: '960px', height: '600px' }} // Adjust dimensions as needed
-            >
-                {/* Unity WebGL will render here */}
-            </div>
-        </div>
+        <div
+            id="unity-container"
+            ref={unityContainerRef}
+            className="unity-container"
+            style={{ width: '960px', height: '600px' }}
+        ></div>
+
     );
 };
 

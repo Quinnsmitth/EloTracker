@@ -5,7 +5,7 @@ export default defineConfig({
         vitePluginStaticCopy({
             targets: [
                 {
-                    src: 'public/UnityGame/Build/*.gz', // Replace with actual path to the .gz files
+                    src: 'public/UnityGame/Build/', // Replace with actual path to the .gz files
                     dest: 'UnityGame/Build', // Destination where the files will be copied
                 },
             ],
