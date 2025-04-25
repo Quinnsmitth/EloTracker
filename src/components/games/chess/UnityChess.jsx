@@ -7,18 +7,17 @@ const UnityGame = () => {
         const script = document.createElement("script");
         script.src = "/UnityGame/Build/UnityGame.loader.js";
         script.onload = () => {
-            // Wait for the script to load, then initialize Unity
             window
                 .createUnityInstance(unityContainerRef.current, {
                     dataUrl: "/UnityGame/Build/UnityGame.data.gz",
-                    frameworkUrl: "public/UnityGame/Build/UnityGame.framework.js.gz",
+                    frameworkUrl: "/UnityGame/Build/UnityGame.framework.js.gz",
                     codeUrl: "/UnityGame/Build/UnityGame.wasm.gz",
                     streamingAssetsUrl: "StreamingAssets",
                     companyName: "YourCompany",
                     productName: "YourProduct",
                     productVersion: "1.0",
                 })
-                .then((unityInstance) => {
+                .then(() => {
                     console.log("Unity loaded!");
                 })
                 .catch((message) => {
@@ -26,7 +25,12 @@ const UnityGame = () => {
                 });
         };
         document.body.appendChild(script);
+
+        return () => {
+            document.body.removeChild(script);
+        };
     }, []);
+
 
     return (
         <div className="game-container">
