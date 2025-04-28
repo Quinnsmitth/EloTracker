@@ -196,16 +196,16 @@ export default function Admin() {
                         />
                         {dropdownOpenId === p.id && (
                           <ul className="dropdown-menu">
-                            <li onClick={() => onVisitProfile(p)}>Visit Profile</li>
-                            {status === 'active' && <li onClick={() => onFlag(p)}>Flag User</li>}
+                            {/* <li onClick={() => onVisitProfile(p)}>Visit Profile</li> */}
+                            {status === 'active' && <li onClick={() => onFlag(p)}>Flag</li>}
                             {status === 'flagged' && (
                               <>
-                                <li onClick={() => onUnflag(p)}>Unflag User</li>
-                                <li onClick={() => onBanClick(p)}>Ban User</li>
+                                <li onClick={() => onUnflag(p)}>Unflag</li>
+                                <li onClick={() => onBanClick(p)}>Ban</li>
                               </>
                             )}
-                            {status === 'active' && <li onClick={() => onBanClick(p)}>Ban User</li>}
-                            {status === 'banned' && <li onClick={() => onUnban(p)}>Unban User</li>}
+                            {status === 'active' && <li onClick={() => onBanClick(p)}>Ban</li>}
+                            {status === 'banned' && <li onClick={() => onUnban(p)}>Unban</li>}
                           </ul>
                         )}
                       </td>

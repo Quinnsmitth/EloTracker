@@ -1,6 +1,6 @@
 .elo-updater-container {
     max-width: 400px;
-    margin: 2rem auto;
+    margin: auto;
     background: #f8fafc;
     border-radius: 1rem;
     padding: 2rem;
@@ -17,9 +17,10 @@
   
   .elo-form label {
     display: block;
-    margin: 1rem 0 0.5rem;
+    margin: 0.25rem 0 0.125rem;
     font-weight: 600;
     color: #374151;
+    line-height: 1.2;
   }
   
   .elo-input {
@@ -171,6 +172,39 @@
     color: #1f2937;
   }
   
+  .elo-container.condensed {
+    padding: 8px;
+    font-size: 14px;
+  }
+  .form-inline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .form-inline select,
+  .form-inline input {
+    padding: 4px;
+    font-size: inherit;
+  }
+  .form-inline button {
+    padding: 4px 8px;
+    font-size: inherit;
+  }
+  .form-inline button.sel {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  .msg {
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 13px;
+  }
   
-  
+  .white-container {
+    background: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
   

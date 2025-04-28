@@ -133,7 +133,6 @@ html, body {
 /* Action gear and dropdown */
 .action-cell {
   position: relative;
-  z-index: 1000;         /* ensure dropdown is on top */
 }
 .gear-icon {
   cursor: pointer;
