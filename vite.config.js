@@ -1,15 +1,24 @@
 import { defineConfig } from 'vite';
-import vitePluginStaticCopy from 'vite-plugin-static-copy'; // Correct import
+import vitePluginStaticCopy from 'vite-plugin-static-copy';
+import compression from 'vite-plugin-compression';
+
 export default defineConfig({
     plugins: [
         vitePluginStaticCopy({
             targets: [
                 {
-                    src: 'public/UnityGame/Build/', // Replace with actual path to the .gz files
-                    dest: 'UnityGame/Build', // Destination where the files will be copied
+                    src: 'public/UnityGame2/Build/',
+                    dest: 'UnityGame2/Build',
                 },
             ],
         }),
+        compression(), // Good for production builds
     ],
-    assetsInclude: ['**/*.gz'], // Ensure .gz files are treated as assets
+    assetsInclude: ['**/*.gz', '**/*.wasm'],
+    server: {
+        headers: {
+            'Cross-Origin-Opener-Policy': 'same-origin',
+            'Cross-Origin-Embedder-Policy': 'require-corp',
+        },
+    },
 });
