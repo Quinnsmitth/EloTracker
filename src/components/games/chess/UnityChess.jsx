@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const UnityGame = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoaded, setIsLoaded]   = useState(false);
-  const unityContainerRef         = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const unityContainerRef = useRef(null); // Reference to the unity container
+  const unityCanvasRef = useRef(null); // New reference for the Unity canvas
 
-  const loadUnity = () => {
-    console.log('▶ loadUnity() called', { isLoading, isLoaded, hasInstance: !!window.unityInstance });
+  const loadUnity = async () => {
     if (isLoading || isLoaded || window.unityInstance) {
       console.log('— exiting early (already loading/loaded or instance exists)');
       return;
@@ -14,31 +14,34 @@ const UnityGame = () => {
     setIsLoading(true);
 
     const script = document.createElement('script');
-    script.src = '/UnityGame2/Build/UnityGame2.loader.js';
+    script.src = '/UnityGame2/Build/UnityGame2.loader.js';  // Ensure path is correct
     script.onload = () => {
-      console.log('✅ loader script loaded');
-      window.createUnityInstance(unityContainerRef.current, {
-        dataUrl: '/UnityGame2/Build/UnityGame2.data',
-        frameworkUrl: '/UnityGame2/Build/UnityGame2.framework.js',
-        codeUrl: '/UnityGame2/Build/UnityGame2.wasm',
-        streamingAssetsUrl: 'StreamingAssets',
-        companyName: 'BadBishop',
-        productName: 'BadChess',
-        productVersion: '.1',
-      })
-      .then(instance => {
-        console.log('🚀 Unity instance created!');
-        setIsLoading(false);
-        setIsLoaded(true);
-        window.unityInstance = instance;
-      })
-      .catch(err => {
-        console.error('❌ Unity failed to create instance:', err);
-        setIsLoading(false);
-      });
+      console.log('— loader script loaded');
+
+      window
+          .createUnityInstance(unityCanvasRef.current, {  // Use the canvas reference
+            dataUrl: '/UnityGame2/Build/UnityGame2.data.gz',
+            frameworkUrl: '/UnityGame2/Build/UnityGame2.framework.js',
+            codeUrl: '/UnityGame2/Build/UnityGame2.wasm.gz',
+            streamingAssetsUrl: 'StreamingAssets',
+            companyName: 'BadBishop',
+            productName: 'BadChess',
+            productVersion: '1.0',
+          })
+          .then(instance => {
+            console.log('Unity instance created!');
+            setIsLoading(false);
+            setIsLoaded(true);
+            window.unityInstance = instance;
+          })
+          .catch(err => {
+            console.error('Unity failed to create instance:', err);
+            setIsLoading(false);
+          });
     };
-    script.onerror = e => {
-      console.error('❌ Failed to load loader script:', e);
+
+    script.onerror = (e) => {
+      console.error('Failed to load loader script:', e);
       setIsLoading(false);
     };
 
@@ -46,7 +49,6 @@ const UnityGame = () => {
     document.body.appendChild(script);
   };
 
-  // cleanup on unmount
   useEffect(() => {
     return () => {
       if (window.unityInstance) {
@@ -59,44 +61,55 @@ const UnityGame = () => {
   }, []);
 
   return (
-    <div style={styles.container}>
-      <button
-        onClick={loadUnity}
-        disabled={isLoading || isLoaded}
-        style={styles.button}
-      >
-        {isLoading ? <div style={styles.spinner} /> : isLoaded ? 'Unity Loaded' : 'Load Unity Game'}
-      </button>
-      <div
-        ref={unityContainerRef}
-        className="unity-container"
-        style={{ width: 960, height: 600, background: '#000' }}
-      />
-    </div>
+      <div style={styles.container}>
+        <button
+            onClick={loadUnity}
+            disabled={isLoading || isLoaded}
+            style={styles.button}
+        >
+          {isLoading ? <div style={styles.spinner} /> : isLoaded ? 'Unity Loaded' : 'Load Unity Game'}
+        </button>
+        <div
+            key="unity-container"
+            ref={unityContainerRef}
+            className="unity-container"
+            style={{ width: 960, height: 600, background: '#000' }}
+        >
+          {/* This is the actual canvas where Unity will render */}
+          <canvas
+              ref={unityCanvasRef}
+              id="unity-canvas"
+              width="960"
+              height="600"
+              tabIndex="-1"
+              style={{ width: '100%', height: '100%' }}
+          ></canvas>
+        </div>
+      </div>
   );
 };
 
 const styles = {
   container: {
-    display:       'flex',
-    justifyContent:'center',
-    alignItems:    'center',
-    height:        '100vh',
-    flexDirection:'column',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    flexDirection: 'column',
   },
   button: {
-    padding:    '10px 20px',
-    fontSize:   '16px',
-    cursor:     'pointer',
-    marginBottom:'20px',
+    padding: '10px 20px',
+    fontSize: '16px',
+    cursor: 'pointer',
+    marginTop: '20px',
   },
   spinner: {
-    width:         20,
-    height:        20,
-    border:        '3px solid #ccc',
-    borderTop:     '3px solid #333',
+    width: 20,
+    height: 20,
+    border: '3px solid #ccc',
+    borderTop: '3px solid #333',
     borderRadius: '50%',
-    animation:     'spin 1s linear infinite',
+    animation: 'spin 1s linear infinite',
   },
 };
 
