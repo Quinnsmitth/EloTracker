@@ -5,129 +5,155 @@ import {
   getDoc,
   updateDoc,
   collection,
-  addDoc,
   getDocs,
-  serverTimestamp,
+  addDoc,
 } from 'firebase/firestore';
 import { firestore } from '../../firebase/firebase';
 import './eloInput.css';
+import { set } from 'firebase/database';
+//hello
 
-export default function EloInput({ gameType, winType, loseType }) {
+const EloInput = ({ gameType, winType, loseType }) => {
   const { currentUser } = useAuth();
-  const [players, setPlayers]           = useState([]);
-  const [opponentId, setOpponentId]     = useState('');
-  const [opponentElo, setOpponentElo]   = useState(null);
-  const [gameResult, setGameResult]     = useState('win');
-  const [message, setMessage]           = useState('');
-  const [loading, setLoading]           = useState(false);
+  const [players, setPlayers] = useState([]);
+  const [opponentId, setOpponentId] = useState('');
+  const [gameResult, setGameResult] = useState('win');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const [reportReason, setReportReason] = useState('');
-  const [isReporting, setIsReporting]   = useState(false);
+  const [isReporting, setIsReporting] = useState(false);
 
-  // 1) Load all other players
+  // load list of all players (for the dropdown)
   useEffect(() => {
-    (async () => {
+    const loadPlayers = async () => {
       const snap = await getDocs(collection(firestore, 'Player'));
-      const list = snap.docs
-        .map(d => ({ id: d.id, ...d.data() }))
-        .filter(p => p.id !== currentUser.uid);
-      setPlayers(list);
-    })();
-  }, [currentUser.uid]);
-
-  // 2) When opponent changes, update displayed Elo
-  useEffect(() => {
-    if (!opponentId) {
-      setOpponentElo(null);
-      return;
-    }
-    const opp = players.find(p => p.id === opponentId);
-    setOpponentElo(opp ? opp[gameType] || 1000 : null);
-  }, [opponentId, players, gameType]);
+      setPlayers(
+        snap.docs.map(d => ({
+          id: d.id,
+          name: d.data().displayName || d.id.slice(0,6),
+        }))
+      );
+      // default-select first if none chosen
+      if (!opponentId && snap.docs.length) {
+        setOpponentId(snap.docs[0].id);
+      }
+    };
+    loadPlayers();
+  }, [opponentId]);
 
   const handleSubmit = async e => {
     e.preventDefault();
-    if (!opponentId) {
-      setMessage('Please select an opponent.');
-      return;
-    }
     setLoading(true);
     setMessage('');
 
     try {
-      // Fetch both docs
-      const meRef  = doc(firestore, 'Player', currentUser.uid);
-      const opRef  = doc(firestore, 'Player', opponentId);
-      const [meSnap, opSnap] = await Promise.all([getDoc(meRef), getDoc(opRef)]);
-      if (!meSnap.exists() || !opSnap.exists()) throw new Error('Player data missing');
+      const meRef = doc(firestore, 'Player', currentUser.uid);
+      const youRef = doc(firestore, 'Player', opponentId);
 
-      const meData = meSnap.data();
-      const opData = opSnap.data();
+      const [meSnap, youSnap] = await Promise.all([
+        getDoc(meRef),
+        getDoc(youRef),
+      ]);
+      if (!meSnap.exists() || !youSnap.exists()) {
+        throw new Error('Player record missing');
+      }
 
-      // Current Elo & stats
-      const curElo = meData[gameType] || 1000;
-      const curWins = meData[winType]  || 0;
-      const curLoss= meData[loseType] || 0;
-      const curGP  = (meData.gamesPlayed || 0) + 1;
+      const me    = meSnap.data();
+      const you   = youSnap.data();
+      const curE  = me[gameType] || 1000;
+      const oppE  = you[gameType]  || 1000;
+      let   meWins   = me[winType]  || 0;
+      let   meLosses = me[loseType] || 0;
+      let   youWins  = you[winType]  || 0;
+      let   youLoss  = you[loseType] || 0;
+      let   mePlayed  = me.gamesPlayed  || 0;
+      let   youPlayed = you.gamesPlayed || 0;
 
-      // Opponent Elo & stats
-      const oppEloVal = opData[gameType] || 1000;
-      const oppWins   = opData[winType]  || 0;
-      const oppLoss   = opData[loseType] || 0;
-      const oppGP     = (opData.gamesPlayed || 0) + 1;
+      // update wins/losses
+      if (gameResult === 'win') {
+        meWins     += 1;
+        youLoss    += 1;
+      } else {
+        meLosses   += 1;
+        youWins    += 1;
+      }
+      mePlayed  += 1;
+      youPlayed += 1;
 
-      // Elo K-factors
-      const Kme  = Math.max(16, 40 - 10 * Math.log10(curGP + 1));
-      const Kop  = Math.max(16, 40 - 10 * Math.log10(oppGP + 1));
+      // dynamic K-factor per player
+      const Kme  = Math.max(16, 40 - 10 * Math.log10(mePlayed + 1));
+      const Kyou = Math.max(16, 40 - 10 * Math.log10(youPlayed + 1));
 
-      // Expected scores
-      const expMe = 1 / (1 + 10 ** ((oppEloVal - curElo) / 400));
-      const expOp = 1 / (1 + 10 ** ((curElo - oppEloVal) / 400));
+      // expected scores
+      const expMe  = 1 / (1 + 10 ** ((oppE - curE) / 400));
+      const expYou = 1 / (1 + 10 ** ((curE - oppE) / 400));
+      const actualMe  = gameResult === 'win' ? 1 : 0;
+      const actualYou = gameResult === 'win' ? 0 : 1;
 
-      // Actual
-      const actualMe = gameResult === 'win' ? 1 : 0;
-      const actualOp = 1 - actualMe;
+      // new Elos
+      const newMeElo  = Math.round(curE  + Kme  * (actualMe  - expMe));
+      const newYouElo = Math.round(oppE  + Kyou * (actualYou - expYou));
 
-      // New Elos
-      const newEloMe = Math.round(curElo + Kme * (actualMe - expMe));
-      const newEloOp = Math.round(oppEloVal + Kop * (actualOp - expOp));
-
-      // Update wins/losses
-      const updatedCurWins  = gameResult === 'win' ? curWins + 1 : curWins;
-      const updatedCurLoss  = gameResult === 'loss' ? curLoss + 1 : curLoss;
-      const updatedOppWins  = actualOp === 1         ? oppWins + 1 : oppWins;
-      const updatedOppLoss  = actualOp === 0         ? oppLoss + 1 : oppLoss;
-
-      // Batch-update both documents
+      // write both docs
       await Promise.all([
         updateDoc(meRef, {
-          [gameType]: newEloMe,
-          gamesPlayed: curGP,
-          [winType]: updatedCurWins,
-          [loseType]: updatedCurLoss,
+          [gameType]: newMeElo,
+          gamesPlayed: mePlayed,
+          [winType]: meWins,
+          [loseType]: meLosses,
         }),
-        updateDoc(opRef, {
-          [gameType]: newEloOp,
-          gamesPlayed: oppGP,
-          [winType]: updatedOppWins,
-          [loseType]: updatedOppLoss,
+        updateDoc(youRef, {
+          [gameType]: newYouElo,
+          gamesPlayed: youPlayed,
+          [winType]: youWins,
+          [loseType]: youLoss,
         }),
       ]);
 
-      // (Optional) report cheating if toggled
+      // optional report
       if (isReporting && reportReason.trim()) {
         await addDoc(collection(firestore, 'Reports'), {
-          accuserId: currentUser.uid,
-          accusedId: opponentId,
+          reporterId: currentUser.uid,
+          reportedId: opponentId,
           reason: reportReason.trim(),
           gameType,
-          date: serverTimestamp(),
+          date: new Date(),
         });
       }
 
-      setMessage(`Done! Your new Elo is ${newEloMe}. Opponent’s new Elo is ${newEloOp}.`);
+      setMessage(
+        `Done! Your new Elo: ${newMeElo}, Opponent's new Elo: ${newYouElo}`
+      );
     } catch (err) {
       console.error(err);
-      setMessage(err.message || 'Error updating Elo.');
+      setMessage('❌ Something went wrong.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReport = async () => {
+    if (!reportReason.trim()) {
+      setMessage('Please provide a reason for reporting.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+        const reportRef = collection(firestore, 'Reports');
+        await addDoc(reportRef, {
+          reporterId: currentUser.uid,
+          reportedId: opponentId,
+          reason: reportReason.trim(),
+          gameType,
+          date: new Date(),
+        });
+        setMessage('Report submitted successfully!');
+        setReportReason('');
+        setIsReporting(false);
+    } catch (err) {
+      console.error(err);
+      setMessage('❌ Failed to submit report.');
     } finally {
       setLoading(false);
     }
@@ -146,19 +172,14 @@ export default function EloInput({ gameType, winType, loseType }) {
           value={opponentId}
           onChange={e => setOpponentId(e.target.value)}
           disabled={loading}
-          required
+          className="elo-input"
         >
-          <option value="">-- select player --</option>
           {players.map(p => (
             <option key={p.id} value={p.id}>
-              {p.displayName || p.email || p.id}
+              {p.name}
             </option>
           ))}
         </select>
-
-        {opponentElo !== null && (
-          <p>Your opponent’s Elo: <strong>{opponentElo}</strong></p>
-        )}
 
         <label>Did you win?</label>
         <div className="result-toggle">
@@ -185,36 +206,36 @@ export default function EloInput({ gameType, winType, loseType }) {
           onClick={() => setIsReporting(r => !r)}
         >
           {isReporting ? 'Cancel Report' : 'Report Opponent for Cheating'}
+
+
+            {isReporting && (
+                <>
+                    <textarea
+                    placeholder="Explain why you're reporting this player…"
+                    value={reportReason}
+                    onChange={(e) => setReportReason(e.target.value)}
+                    disabled={loading}
+                    className="report-textarea"
+                />
+                <button
+                    type="button"
+                    onClick={handleReport}
+                    disabled={loading || !reportReason.trim()}
+                    className="submit-report-button"
+                >
+                    {loading ? 'Submitting…' : 'Submit Report'}
+                </button>
+                </>
+            )}
         </div>
-
-        {isReporting && (
-        <>
-          <textarea
-            placeholder="Explain why you're reporting this player…"
-            value={reportReason}
-            onChange={e => setReportReason(e.target.value)}
-            disabled={loading}
-            className="report-textarea"
-          />
-
-         {/* New Submit Report button */}
-         <button
-           type="button"
-           className="submit-report-button"
-           onClick={handleReportOnly}
-           disabled={loading || !reportReason.trim()}
-         >
-           {loading ? 'Submitting…' : 'Submit Report'}
-         </button>
-        </>
-      )}
-
         <button type="submit" disabled={loading} className="submit-button">
-          {loading ? 'Submitting…' : 'Update Elo'}
+          {loading ? 'Updating…' : 'Update Elo'}
         </button>
       </form>
 
       {message && <p className="elo-message">{message}</p>}
     </div>
   );
-}
+};
+
+export default EloInput;
