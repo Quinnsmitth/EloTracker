@@ -18,3 +18,6 @@
 
 - [New Class Diagram](https://drive.google.com/file/d/1Guwj6a0fYIemh6QSLXmv8MU-gbMjjqLr/view?usp=sharing)
 - Link to [Retrospective](https://docs.google.com/document/d/10weN0n0mEsCQFJs0movwRdscf21BUtfV3HiZBCTG_1I/edit?tab=t.0)
+
+## Link to Chess repo
+https://github.com/dsdrv2358/ChessGame

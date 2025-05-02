@@ -1,60 +1,48 @@
-import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../firebase/firebase.js";
-import { GoogleAuthProvider } from "firebase/auth";
-import { onAuthStateChanged } from "firebase/auth";
+// src/authContext/index.jsx
+import React, { createContext, useContext, useState, useEffect } from "react"
+import { onAuthStateChanged } from "firebase/auth"
+import { doc, getDoc } from "firebase/firestore"
+import { auth, firestore } from "../firebase/firebase.js"
 
-const Index = React.createContext(undefined, undefined);
+const AuthContext = createContext()
 
 export function useAuth() {
-    return useContext(Index);
+  return useContext(AuthContext)
 }
 
 export function AuthProvider({ children }) {
-    const [currentUser, setCurrentUser] = useState(null);
-    const [userLoggedIn, setUserLoggedIn] = useState(false);
-    const [isEmailUser, setIsEmailUser] = useState(false);
-    const [isGoogleUser, setIsGoogleUser] = useState(false);
-    const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null)
+  const [userData, setUserData]       = useState({})
+  const [loading, setLoading]         = useState(true)
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, initializeUser);
-        return unsubscribe;
-    }, []);
+  useEffect(() => {
+    // subscribe to Firebase auth state
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setCurrentUser(user)
 
-    async function initializeUser(user) {
-        if (user) {
+      if (user) {
+        // fetch the Player doc for this UID
+        const snap = await getDoc(doc(firestore, "Player", user.uid))
+        setUserData(snap.exists() ? snap.data() : {})
+      } else {
+        setUserData({})
+      }
 
-            setCurrentUser({ ...user });
+      setLoading(false)
+    })
 
-            const isEmail = user.providerData.some(
-                (provider) => provider.providerId === "password"
-            );
-            setIsEmailUser(isEmail);
-             const isGoogle = user.providerData.some(
-                (provider) => provider.providerId === GoogleAuthProvider.PROVIDER_ID
-              );
-              setIsGoogleUser(isGoogle);
+    return unsubscribe
+  }, [])
 
-            setUserLoggedIn(true);
-        } else {
-            setCurrentUser(null);
-            setUserLoggedIn(false);
-        }
+  const value = {
+    currentUser,
+    userLoggedIn: !!currentUser,
+    userData,
+  }
 
-        setLoading(false);
-    }
-
-    const value = {
-        userLoggedIn,
-        isEmailUser,
-        isGoogleUser,
-        currentUser,
-        setCurrentUser
-    };
-
-    return (
-        <Index.Provider value={value}>
-            {!loading && children}
-        </Index.Provider>
-    );
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  )
 }
