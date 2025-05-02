@@ -10,8 +10,6 @@ import {
 } from 'firebase/firestore';
 import { firestore } from '../../firebase/firebase';
 import './eloInput.css';
-import { set } from 'firebase/database';
-//hello
 
 const EloInput = ({ gameType, winType, loseType }) => {
   const { currentUser } = useAuth();
@@ -23,59 +21,24 @@ const EloInput = ({ gameType, winType, loseType }) => {
   const [reportReason, setReportReason] = useState('');
   const [isReporting, setIsReporting] = useState(false);
 
-  // toggle the roprt textarea open
-  const handleReportOnly = () => {
-    setIsReporting(true);
-  };
-
-  // new handler just for reporting
-  const handleReport = async () => {
-      if (!opponentId) {
-        setMessage('Please choose an opponent to report.');
-        return;
-      }
-      if (!reportReason.trim()) {
-        setMessage('Please enter a reason for your report.');
-        return;
-      }
-          setLoading(true);
-      try {
-        await addDoc(collection(firestore, 'Reports'), {
-          accuserId: currentUser.uid,
-          accusedId: opponentId,
-          reason: reportReason.trim(),
-          gameType,
-          date: new Date()
-       });
-        setMessage('Report submitted successfully.');
-        setReportReason('');
-        setIsReporting(false);
-      } catch (err) {
-        console.error('Submit report failed', err);
-        setMessage('Failed to submit report.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-  // 1) Load all other players
+  // Load all other players once
   useEffect(() => {
     const loadPlayers = async () => {
       const snap = await getDocs(collection(firestore, 'Player'));
-      setPlayers(
-        snap.docs.map(d => ({
-          id: d.id,
-          name: d.data().displayName || d.id.slice(0,6),
-        }))
-      );
-      // default-select first if none chosen
-      if (!opponentId && snap.docs.length) {
-        setOpponentId(snap.docs[0].id);
+      const list = snap.docs.map(d => ({
+        id: d.id,
+        name: d.data().displayName || d.id.slice(0, 6),
+      }));
+      setPlayers(list);
+      if (!opponentId && list.length) {
+        setOpponentId(list[0].id);
       }
     };
     loadPlayers();
-  }, [opponentId]);
+    // only run once
+  }, []);
 
+  // update both users’ Elo
   const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
@@ -104,32 +67,27 @@ const EloInput = ({ gameType, winType, loseType }) => {
       let   mePlayed  = me.gamesPlayed  || 0;
       let   youPlayed = you.gamesPlayed || 0;
 
-      // update wins/losses
       if (gameResult === 'win') {
-        meWins     += 1;
-        youLoss    += 1;
+        meWins   += 1;
+        youLoss  += 1;
       } else {
-        meLosses   += 1;
-        youWins    += 1;
+        meLosses += 1;
+        youWins  += 1;
       }
       mePlayed  += 1;
       youPlayed += 1;
 
-      // dynamic K-factor per player
       const Kme  = Math.max(16, 40 - 10 * Math.log10(mePlayed + 1));
       const Kyou = Math.max(16, 40 - 10 * Math.log10(youPlayed + 1));
 
-      // expected scores
       const expMe  = 1 / (1 + 10 ** ((oppE - curE) / 400));
       const expYou = 1 / (1 + 10 ** ((curE - oppE) / 400));
       const actualMe  = gameResult === 'win' ? 1 : 0;
       const actualYou = gameResult === 'win' ? 0 : 1;
 
-      // new Elos
       const newMeElo  = Math.round(curE  + Kme  * (actualMe  - expMe));
       const newYouElo = Math.round(oppE  + Kyou * (actualYou - expYou));
 
-      // write both docs
       await Promise.all([
         updateDoc(meRef, {
           [gameType]: newMeElo,
@@ -145,17 +103,6 @@ const EloInput = ({ gameType, winType, loseType }) => {
         }),
       ]);
 
-      // optional report
-      if (isReporting && reportReason.trim()) {
-        await addDoc(collection(firestore, 'Reports'), {
-          reporterId: currentUser.uid,
-          reportedId: opponentId,
-          reason: reportReason.trim(),
-          gameType,
-          date: new Date(),
-        });
-      }
-
       setMessage(
         `Done! Your new Elo: ${newMeElo}, Opponent's new Elo: ${newYouElo}`
       );
@@ -167,28 +114,31 @@ const EloInput = ({ gameType, winType, loseType }) => {
     }
   };
 
+  // exclusively for submitting a report
   const handleReport = async () => {
-    if (!reportReason.trim()) {
-      setMessage('Please provide a reason for reporting.');
+    if (!opponentId) {
+      setMessage('Please choose an opponent to report.');
       return;
     }
-
+    if (!reportReason.trim()) {
+      setMessage('Please enter a reason for your report.');
+      return;
+    }
     setLoading(true);
     try {
-        const reportRef = collection(firestore, 'Reports');
-        await addDoc(reportRef, {
-          reporterId: currentUser.uid,
-          reportedId: opponentId,
-          reason: reportReason.trim(),
-          gameType,
-          date: new Date(),
-        });
-        setMessage('Report submitted successfully!');
-        setReportReason('');
-        setIsReporting(false);
+      await addDoc(collection(firestore, 'Reports'), {
+        accuserId: currentUser.uid,
+        accusedId: opponentId,
+        reason: reportReason.trim(),
+        gameType,
+        date: new Date(),
+      });
+      setMessage('Report submitted successfully.');
+      setReportReason('');
+      setIsReporting(false);
     } catch (err) {
-      console.error(err);
-      setMessage('❌ Failed to submit report.');
+      console.error('Submit report failed', err);
+      setMessage('Failed to submit report.');
     } finally {
       setLoading(false);
     }
@@ -238,33 +188,31 @@ const EloInput = ({ gameType, winType, loseType }) => {
 
         <button
           type="button"
-          className={"report-toggle-button"}
+          className="report-toggle-button"
           onClick={() => setIsReporting(open => !open)}
         >
           {isReporting ? 'Cancel Report' : 'Report Opponent for Cheating'}
         </button>
 
         {isReporting && (
-        <>
-          <textarea
-            placeholder="Explain why you're reporting this player…"
-            value={reportReason}
-            onChange={e => setReportReason(e.target.value)}
-            disabled={loading}
-            className="report-textarea"
-          />
-
-         {/* New Submit Report button */}
-         <button
-           type="button"
-           className="submit-report-button"
-           onClick={handleReport}
-           disabled={loading}
-         >
-           {loading ? 'Submitting…' : 'Submit Report'}
-         </button>
-        </>
-      )}
+          <>
+            <textarea
+              placeholder="Explain why you're reporting this player…"
+              value={reportReason}
+              onChange={e => setReportReason(e.target.value)}
+              disabled={loading}
+              className="report-textarea"
+            />
+            <button
+              type="button"
+              className="submit-report-button"
+              onClick={handleReport}
+              disabled={loading}
+            >
+              {loading ? 'Submitting…' : 'Submit Report'}
+            </button>
+          </>
+        )}
 
         <button type="submit" disabled={loading} className="submit-button">
           {loading ? 'Updating…' : 'Update Elo'}
