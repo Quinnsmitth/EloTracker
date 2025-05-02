@@ -83,25 +83,25 @@ const Header = () => {
         {userLoggedIn ? (
           <>
             {!isAdmin && (
-              <Link className="nav-link" to="/profile">
+              <Link className="nav-link" to="/profile" onClick={() => setIsNavOpen(false)}>
                 Profile
               </Link>
             )}
-            <Link className="nav-link" to="/leaderboard">
+            <Link className="nav-link" to="/leaderboard" onClick={() => setIsNavOpen(false)}>
               Leaderboard
             </Link>
             {isAdmin && (
-              <Link className="nav-link" to="/admin">
+              <Link className="nav-link" to="/admin" onClick={() => setIsNavOpen(false)}>
                 Admin
               </Link>
             )}
           </>
         ) : (
           <>
-            <Link className="nav-link" to="/login">
+            <Link className="nav-link" to="/login" onClick={() => setIsNavOpen(false)}>
               Login
             </Link>
-            <Link className="nav-link" to="/register">
+            <Link className="nav-link" to="/register" onClick={() => setIsNavOpen(false)}>
               Register
             </Link>
           </>
