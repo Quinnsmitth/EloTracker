@@ -25,7 +25,6 @@
 //   }
 // }))
 
-// vite.config.js (sketch)
 // vite.config.js
 import { defineConfig } from 'vite'
 
