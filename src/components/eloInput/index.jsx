@@ -23,6 +23,41 @@ export default function EloInput({ gameType, winType, loseType }) {
   const [reportReason, setReportReason] = useState('');
   const [isReporting, setIsReporting]   = useState(false);
 
+  // toggle the roprt textarea open
+  const handleReportOnly = () => {
+    setIsReporting(true);
+  };
+
+  // new handler just for reporting
+  const handleReport = async () => {
+      if (!opponentId) {
+        setMessage('Please choose an opponent to report.');
+        return;
+      }
+      if (!reportReason.trim()) {
+        setMessage('Please enter a reason for your report.');
+        return;
+      }
+          setLoading(true);
+      try {
+        await addDoc(collection(firestore, 'Reports'), {
+          accuserId: currentUser.uid,
+          accusedId: opponentId,
+          reason: reportReason.trim(),
+          gameType,
+          date: new Date()
+       });
+        setMessage('Report submitted successfully.');
+        setReportReason('');
+        setIsReporting(false);
+      } catch (err) {
+        console.error('Submit report failed', err);
+        setMessage('Failed to submit report.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
   // 1) Load all other players
   useEffect(() => {
     (async () => {
@@ -180,12 +215,13 @@ export default function EloInput({ gameType, winType, loseType }) {
           </button>
         </div>
 
-        <div
-          className={`report-box ${isReporting ? 'active' : ''}`}
-          onClick={() => setIsReporting(r => !r)}
+        <button
+          type="button"
+          className={"report-toggle-button"}
+          onClick={() => setIsReporting(open => !open)}
         >
           {isReporting ? 'Cancel Report' : 'Report Opponent for Cheating'}
-        </div>
+        </button>
 
         {isReporting && (
         <>
@@ -201,8 +237,8 @@ export default function EloInput({ gameType, winType, loseType }) {
          <button
            type="button"
            className="submit-report-button"
-           onClick={handleReportOnly}
-           disabled={loading || !reportReason.trim()}
+           onClick={handleReport}
+           disabled={loading}
          >
            {loading ? 'Submitting…' : 'Submit Report'}
          </button>

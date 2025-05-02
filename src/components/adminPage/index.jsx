@@ -37,7 +37,7 @@ export default function Admin() {
 
   const [filterType, setFilterType] = useState('all')
 
-  // Below where you compute displayed inbox rows, before return:
+  // Below where you compute displayed inbox rows:
   const displayedInbox = inboxItems.filter(item =>
     filterType === 'all'
       ? true
@@ -46,8 +46,17 @@ export default function Admin() {
         : item.type === 'Dispute'
   )
 
+  const getPlayerById = id => players.find(p => p.id === id) || { displayName: id }
+
   // --- Common State ---
   const [loading, setLoading] = useState(true)
+
+  // heper to look up a player's friendly name
+  const getplayerName = uid => {
+    const p = players.find(x => x.id === uid)
+    return p ? (p.displayName || p.email || p.id)
+      : uid;
+  };
 
   // --- Modals ---
   const [modalItem, setModalItem]     = useState(null) // item = { type, id, ...data }
@@ -303,8 +312,11 @@ export default function Admin() {
               <>
                 <h3>Dispute Detail</h3>
                 <p><strong>User:</strong>{' '}
-                  <button className="link-button" onClick={()=>showStats(modalItem.userId)}>
-                    {modalItem.userId}
+                  <button 
+                    className="link-button" 
+                    onClick={()=>showStats(modalItem.userId)}
+                  >
+                    {getplayerName(modalItem.userId)}
                   </button>
                 </p>
                 <p><strong>Claim:</strong> {modalItem.claim}</p>
@@ -314,27 +326,46 @@ export default function Admin() {
                 </div>
               </>
             ) : (
-              <>
-                <h3>Report Detail</h3>
-                <p><strong>Accuser:</strong>{' '}
-                  <button className="link-button" onClick={()=>showStats(modalItem.userId)}>
-                    {modalItem.userId}
-                  </button>
-                </p>
-                <p><strong>Accused:</strong>{' '}
-                  <button className="link-button" onClick={()=>showStats(modalItem.playerId)}>
-                    {modalItem.playerId}
-                  </button>
-                </p>
-                <p><strong>Reason:</strong> {modalItem.reason}</p>
-                <div className="modal-actions">
-                  <button onClick={()=>setShowModal(false)}>Close</button>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      )}
+                <>
+            <h3>Report Detail</h3>
+
+            {/* Accuser */}
+            <p>
+              <strong>Accuser:</strong>{' '}
+              <button
+                className="link-button"
+                onClick={e => {
+                  e.stopPropagation();
+                  showStats(modalItem.userId);
+                }}
+              >
+                {getPlayerById(modalItem.userId).displayName}
+              </button>
+            </p>
+
+            {/* Accused */}
+            <p>
+              <strong>Accused:</strong>{' '}
+              <button
+                className="link-button"
+                onClick={e => {
+                  e.stopPropagation();
+                  showStats(modalItem.playerId);
+                }}
+              >
+                {getPlayerById(modalItem.playerId).displayName}
+              </button>
+            </p>
+
+            <p><strong>Reason:</strong> {modalItem.reason}</p>
+            <div className="modal-actions">
+              <button onClick={() => setShowModal(false)}>Close</button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  )}
 
       {/* ── Stats Modal ── */}
       {showStatsModal && statsTarget && (
