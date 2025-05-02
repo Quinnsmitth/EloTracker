@@ -1,3 +1,4 @@
+
 .elo-updater-container {
     max-width: 400px;
     margin: auto;
@@ -17,10 +18,9 @@
   
   .elo-form label {
     display: block;
-    margin: 0.25rem 0 0.125rem;
+    margin: 1rem 0 0.5rem;
     font-weight: 600;
     color: #374151;
-    line-height: 1.2;
   }
   
   .elo-input {
@@ -31,6 +31,13 @@
     border-radius: 0.5rem;
     outline: none;
     transition: border 0.3s ease;
+    background-color: #fff;
+    color: #000;
+  }
+
+  select.elo-input {
+    background-color: #fff;
+    color: #000;
   }
   
   .elo-input:focus {
@@ -140,7 +147,7 @@
 
   .report-box {
     margin-top: 1.25rem;
-    padding: 0.75rem 1rem;
+    padding: 1rem;
     background-color: #fef2f2;
     color: #b91c1c;
     border: 2px dashed #ef4444;
@@ -149,6 +156,10 @@
     cursor: pointer;
     font-weight: bold;
     transition: all 0.2s ease;
+    gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    background: #fee;
   }
   
   .report-box:hover {
@@ -162,49 +173,39 @@
   }
   
   .report-textarea {
-    margin-top: 0.75rem;
     width: 100%;
-    height: 100px;
-    padding: 0.75rem;
-    background-color: #fff0f1;
-    border: 1px solid #f87171;
-    border-radius: 10px;
-    color: #1f2937;
-  }
-  
-  .elo-container.condensed {
-    padding: 8px;
-    font-size: 14px;
-  }
-  .form-inline {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 6px;
-  }
-  .form-inline select,
-  .form-inline input {
-    padding: 4px;
-    font-size: inherit;
-  }
-  .form-inline button {
-    padding: 4px 8px;
-    font-size: inherit;
-  }
-  .form-inline button.sel {
-    font-weight: bold;
-    text-decoration: underline;
-  }
-  .msg {
-    margin-bottom: 8px;
-    color: #555;
-    font-size: 13px;
-  }
-  
-  .white-container {
+    box-sizing: border-box;
+    min-height: 4rem;
+    padding: 0.5rem;
+    resize: vertical;
+    border: 1px solid #ccc;
     background: #fff;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   }
+
+  .report-box .report-textarea {
+    width: 100%;
+    box-sizing: border-box;     /* so padding doesn’t blow out width */
+    min-height: 4rem;           /* pick a comfortable height */
+    resize: vertical;           /* let user drag to grow taller if they want */
+    background: white;          /* keep the box’s bg if you like */
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+  }
+  
+  .submit-report-button {
+    align-self: flex-end;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: #d9534f;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .submit-report-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  
   
