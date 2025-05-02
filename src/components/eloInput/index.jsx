@@ -10,6 +10,9 @@ import {
 } from 'firebase/firestore';
 import { firestore } from '../../firebase/firebase';
 import './eloInput.css';
+import { useNavigate } from 'react-router-dom'
+
+import { set } from 'firebase/database';
 
 const EloInput = ({ gameType, winType, loseType }) => {
   const { currentUser } = useAuth();
@@ -20,6 +23,8 @@ const EloInput = ({ gameType, winType, loseType }) => {
   const [loading, setLoading] = useState(false);
   const [reportReason, setReportReason] = useState('');
   const [isReporting, setIsReporting] = useState(false);
+  const navigate = useNavigate()
+
 
   // Load all other players once
   useEffect(() => {
@@ -145,6 +150,7 @@ const EloInput = ({ gameType, winType, loseType }) => {
   };
 
   return (
+    
     <div className="elo-updater-container">
       <h2>Update {gameType}</h2>
       <form
@@ -165,6 +171,8 @@ const EloInput = ({ gameType, winType, loseType }) => {
             </option>
           ))}
         </select>
+
+          
 
         <label>Did you win?</label>
         <div className="result-toggle">
@@ -220,7 +228,9 @@ const EloInput = ({ gameType, winType, loseType }) => {
       </form>
 
       {message && <p className="elo-message">{message}</p>}
-    </div>
+    </div>  
+
+    
   );
 };
 
