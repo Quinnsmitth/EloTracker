@@ -1,4 +1,3 @@
-// src/authContext/index.jsx
 import React, { createContext, useContext, useState, useEffect } from "react"
 import { onAuthStateChanged } from "firebase/auth"
 import { doc, getDoc } from "firebase/firestore"
@@ -16,12 +15,10 @@ export function AuthProvider({ children }) {
   const [loading, setLoading]         = useState(true)
 
   useEffect(() => {
-    // subscribe to Firebase auth state
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user)
 
       if (user) {
-        // fetch the Player doc for this UID
         const snap = await getDoc(doc(firestore, "Player", user.uid))
         setUserData(snap.exists() ? snap.data() : {})
       } else {

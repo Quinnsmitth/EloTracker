@@ -26,7 +26,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* now we’ll use onClick, not hover, since you said “when clicked” */}
       <div
         className="footer-hover-zone"
         onClick={playRandomSound}

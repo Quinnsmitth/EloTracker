@@ -1,49 +1,44 @@
-/* Ensure that the html and body take up the full height of the screen */
 html, body {
     height: 100%;
     margin: 0;
 }
 
-/* Set up full height and width for body */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full height of the viewport */
+    height: 100vh;
     color: black;
 }
 
-/* Center the form container using absolute positioning */
 main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ensure it takes up full viewport height */
+    height: 100vh; 
     width: 100%;
-    position: relative; /* Allow absolute centering */
+    position: relative; 
 }
 
-/* Form container with flexbox centering and white box around */
 .login-container {
     position: absolute;
-    top: 50%; /* Move the container up higher (was 45%) */
+    top: 50%; 
     left: 50%;
-    transform: translate(-50%, -50%); /* Exact centering */
+    transform: translate(-50%, -50%); 
     width: 90vw;
-    max-width: 400px; /* Set a max width */
+    max-width: 400px; 
     min-width: 300px; 
         
     padding: 40px;
-    background-color: #fff; /* White background for the container */
+    background-color: #fff; 
     border-radius: 20px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
     display: flex;
     flex-direction: column;
-    align-items: center; /* Align the children inside the container */
+    align-items: center; 
     box-sizing: border-box;
 }
 
-/* Adding a separate box for white border */
 .login-container::before {
     content: "";
     position: absolute;
@@ -52,52 +47,46 @@ main {
     right: -5px;
     bottom: -5px;
     border-radius: 20px;
-    border: 2px solid #fff; /* White border around the container */
-    z-index: -1; /* Place it behind the container */
+    border: 2px solid #fff; 
+    z-index: -1; 
 }
 
-/* Header */
 .login-box h3 {
     text-align: center;
     font-size: 28px;
     margin-bottom: 20px;
-    color: #000; /* Black text for better readability */
+    color: #000; 
 }
 
-/* Form styling */
 .login-box .space-y-5 {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Increase the gap between form elements */
+    gap: 20px; 
     width: 100%;
 }
 
-/* Input styling */
 .login-box input {
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc; /* Light border */
+    border: 1px solid #ccc;
     border-radius: 10px;
-    margin-top: 5px; /* Space between label and input */
-    background-color: #f5f5f5; /* Light background for inputs */
-    color: #333; /* Dark text inside the inputs */
+    margin-top: 5px; 
+    background-color: #f5f5f5; 
+    color: #333; 
 }
 
-/* Adding space between label and input box */
 .login-box label {
-    margin-bottom: 10px; /* Increased space between label and input box */
+    margin-bottom: 10px; 
 }
 
-/* Input focus effect */
 .login-box input:focus {
-    border-color: #4CAF50; /* Green border on focus */
+    border-color: #4CAF50; 
     outline: none;
 }
 
-/* Submit button styling */
 .login-box button {
-    background-color: #28a745; /* Green background for submit button */
-    color: white; /* White text */
+    background-color: #28a745; 
+    color: white;
     font-size: 16px;
     font-weight: bold;
     padding: 12px;
@@ -108,11 +97,11 @@ main {
 }
 
 .login-box button:hover {
-    background-color: #218838; /* Darker green on hover */
+    background-color: #218838; 
 }
 
 .login-box button:disabled {
-    background-color: #a1d8a5; /* Lighter green when disabled */
+    background-color: #a1d8a5; 
     cursor: not-allowed;
 }
 

@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #f4f4f4; /* Light gray background */
+    background-color: #f4f4f4; 
     padding: 20px;
 }
 
@@ -27,12 +27,12 @@
 }
 
 .username-setup-container input:focus {
-    border-color: #4C7BFE; /* Focus border color (blue) */
-    box-shadow: 0 0 8px rgba(76, 123, 254, 0.4); /* Light blue shadow on focus */
+    border-color: #4C7BFE; 
+    box-shadow: 0 0 8px rgba(76, 123, 254, 0.4); 
 }
 
 .username-setup-container button {
-    background-color: #4C7BFE; /* Button background color */
+    background-color: #4C7BFE; 
     color: white;
     padding: 12px 25px;
     font-size: 1rem;
@@ -43,7 +43,7 @@
 }
 
 .username-setup-container button:hover {
-    background-color: #3b6ec6; /* Darker blue on hover */
+    background-color: #3b6ec6; 
 }
 
 .username-setup-container p {

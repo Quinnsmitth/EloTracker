@@ -1,4 +1,3 @@
-// src/components/BannedPage.jsx
 import React, { useState, useEffect } from 'react'
 import { signOut } from 'firebase/auth'
 import {
@@ -23,7 +22,6 @@ export default function BannedPage() {
   const [hasDisputed, setHasDisputed]           = useState(false)
   const [currentTime, setCurrentTime]           = useState(new Date())
 
-  // 1) On mount, check if a dispute by this user already exists
   useEffect(() => {
     const checkDispute = async () => {
       if (!currentUser) return
@@ -37,7 +35,6 @@ export default function BannedPage() {
     checkDispute()
   }, [currentUser])
 
-  // 2) When modal opens, start clock; when it closes, clear it
   useEffect(() => {
     if (!showDisputeModal) return
     setCurrentTime(new Date())

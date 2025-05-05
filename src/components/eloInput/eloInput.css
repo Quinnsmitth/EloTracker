@@ -62,41 +62,36 @@
     transition: all 0.2s ease;
   }
   
-  /* Hover on unselected buttons */
   .result-button:hover {
     background: #d1d5db;
   }
   
-  /* Hover + active for "Yes" */
   .result-button.selected-win {
     background-color: #10b981;
     color: white;
     border-color: #059669;
   }
   .result-button.selected-win:hover {
-    background-color: #34d399; /* lighter green */
+    background-color: #34d399; 
   }
   
-  /* Hover + active for "No" */
   .result-button.selected-loss {
     background-color: #ef4444;
     color: white;
     border-color: #dc2626;
   }
   .result-button.selected-loss:hover {
-    background-color: #f87171; /* lighter red */
+    background-color: #f87171; 
   }
 
-  /* Form background changes */
   .elo-form.bg-green {
-    background-color: #bbf7d0; /* slightly darker green background */
+    background-color: #bbf7d0; 
   }
   
   .elo-form.bg-red {
-    background-color: #fecaca; /* slightly darker red background */
+    background-color: #fecaca; 
   }
   
-  /* Buttons always have color */
   .result-button {
     padding: 0.5rem 1.25rem;
     border: 2px solid transparent;
@@ -107,7 +102,6 @@
     color: white;
   }
   
-  /* Always green for YES */
   .result-button.yes {
     background-color: #10b981;
   }
@@ -116,7 +110,6 @@
     background-color: #059669;
   }
   
-  /* Always red for NO */
   .result-button.no {
     background-color: #ef4444;
   }
@@ -184,10 +177,10 @@
 
   .report-box .report-textarea {
     width: 100%;
-    box-sizing: border-box;     /* so padding doesn’t blow out width */
-    min-height: 4rem;           /* pick a comfortable height */
-    resize: vertical;           /* let user drag to grow taller if they want */
-    background: white;          /* keep the box’s bg if you like */
+    box-sizing: border-box;     
+    min-height: 4rem;          
+    resize: vertical;           
+    background: white;          
     border: 1px solid #ccc;
     padding: 0.5rem;
   }

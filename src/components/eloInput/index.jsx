@@ -26,7 +26,7 @@ const EloInput = ({ gameType, winType, loseType }) => {
   const navigate = useNavigate()
 
 
-  // Load all other players once
+ 
   useEffect(() => {
     const loadPlayers = async () => {
       const snap = await getDocs(collection(firestore, 'Player'));
@@ -40,10 +40,10 @@ const EloInput = ({ gameType, winType, loseType }) => {
       }
     };
     loadPlayers();
-    // only run once
+    
   }, []);
 
-  // update both users’ Elo
+  
   const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
@@ -119,7 +119,7 @@ const EloInput = ({ gameType, winType, loseType }) => {
     }
   };
 
-  // exclusively for submitting a report
+  
   const handleReport = async () => {
     if (!opponentId) {
       setMessage('Please choose an opponent to report.');

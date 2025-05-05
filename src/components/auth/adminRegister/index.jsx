@@ -35,7 +35,6 @@ const AdminRegister = () => {
       setIsRegistering(true);
 
       try {
-        // Check if the admin username is already taken in the 'Admin' collection
         const usernameQuery = query(
           collection(firestore, 'Admin'),
           where('displayName', '==', username)
@@ -47,7 +46,6 @@ const AdminRegister = () => {
           return;
         }
 
-        // NEW: Check if the email already exists in the Player collection.
         const playerQuery = query(
           collection(firestore, 'Player'),
           where('email', '==', email)
@@ -59,18 +57,15 @@ const AdminRegister = () => {
           return;
         }
 
-        // Create new admin account via firebase auth
         const userCredential = await doCreateUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
 
-        // Save admin details in the 'Admin' collection
         await setDoc(doc(firestore, 'Admin', user.uid), {
           email: user.email,
           displayName: username,
           adminID: user.uid,
         });
 
-        // Redirect to admin dashboard
         navigate('/admin/dashboard');
       } catch (error) {
         console.error("Registration Error:", error.message);

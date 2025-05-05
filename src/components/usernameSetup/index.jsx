@@ -22,7 +22,6 @@ const UsernameSetup = () => {
         }
 
         try {
-            // Update username in Firestore
             await updateDoc(doc(firestore, 'Player', currentUser.uid), {
                 displayName: username,
             });

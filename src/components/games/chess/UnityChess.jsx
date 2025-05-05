@@ -3,8 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 const UnityGame = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const unityContainerRef = useRef(null); // Reference to the unity container
-  const unityCanvasRef = useRef(null); // New reference for the Unity canvas
+  const unityContainerRef = useRef(null); 
+  const unityCanvasRef = useRef(null); 
 
   const loadUnity = async () => {
     if (isLoading || isLoaded || window.unityInstance) {
@@ -14,12 +14,12 @@ const UnityGame = () => {
     setIsLoading(true);
 
     const script = document.createElement('script');
-    script.src = '/UnityGame2/Build/UnityGame2.loader.js';  // Ensure path is correct
+    script.src = '/UnityGame2/Build/UnityGame2.loader.js';  
     script.onload = () => {
       console.log('— loader script loaded');
 
       window
-          .createUnityInstance(unityCanvasRef.current, {  // Use the canvas reference
+          .createUnityInstance(unityCanvasRef.current, {  
             dataUrl: '/UnityGame2/Build/UnityGame2.data.gz',
             frameworkUrl: '/UnityGame2/Build/UnityGame2.framework.js',
             codeUrl: '/UnityGame2/Build/UnityGame2.wasm.gz',
@@ -75,7 +75,6 @@ const UnityGame = () => {
             className="unity-container"
             style={{ width: 960, height: 600, background: '#000' }}
         >
-          {/* This is the actual canvas where Unity will render */}
           <canvas
               ref={unityCanvasRef}
               id="unity-canvas"
@@ -113,7 +112,6 @@ const styles = {
   },
 };
 
-// inject spinner keyframes once
 ;(function injectSpinnerCSS() {
   const rule = `
     @keyframes spin {

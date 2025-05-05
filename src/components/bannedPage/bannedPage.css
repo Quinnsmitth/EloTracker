@@ -1,4 +1,3 @@
-/* Full-screen ban container */
 .banned-container {
     position: fixed;
     top: 0; left: 0;
@@ -51,7 +50,6 @@
     opacity: 0.9;
   }
   
-  /* Re-use the same modal styles */
   .modal-backdrop {
     position: fixed;
     top: 0; left: 0;
