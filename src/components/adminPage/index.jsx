@@ -21,22 +21,9 @@ export default function Admin() {
 
   // --- Players Panel State ---
   const [players, setPlayers]           = useState([])
-  const [searchTerm, setSearchTerm]       = useState('')
   const [showBanModal, setShowBanModal] = useState(false)
   const [banTarget, setBanTarget]       = useState(null)
   const [dropdownOpenId, setDropdownOpenId] = useState(null)
-
-  const filteredPlayers = players.filter(p => {
-    const lower = searchTerm.toLowerCase()
-    return (
-      (p.displayName || '')
-        .toLowerCase()
-        .includes(lower) ||
-      (p.email || '')
-        .toLowerCase()
-        .includes(lower)
-    )
-  })
 
   const gameOptions = [
     { key: 'chess',  label: 'Chess',               elo: 'chessElo',           wins: 'chessWins',           losses: 'chessLosses'         },
@@ -44,6 +31,14 @@ export default function Admin() {
     { key: 'number', label: 'Number Guesser',      elo: 'numberGuesserElo',   wins: 'numberGuesserWins',   losses: 'numberGuesserLosses' }
   ]
   const [selectedGame, setSelectedGame] = useState(gameOptions[0])
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const filteredPlayers = players.filter(p => {
+    const name  = (p.displayName  || '').toLowerCase()
+    const email = (p.email || '').toLowerCase()
+    const term  = searchTerm.toLowerCase()
+    return name.includes(term) || email.includes(term)
+  })
 
   // --- Inbox Panel State ---
   const [inboxItems, setInboxItems] = useState([])
@@ -170,40 +165,38 @@ export default function Admin() {
   return (
     <div className="admin-container">
       <h2>Admin Dashboard</h2>
-
+  
       <div className="admin-panels">
         {/* ── Players Panel ── */}
         <div className="panel">
           <div className="panel-header">
             <h3>Players</h3>
-            <div className="panel-controls">
+            {/* Search Bar */}
+            <input
+              type="text"
+              className="player-search"
+              placeholder="Search by name or email…"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+            />
+  
+            <div className="game-select">
               <label>
                 Show stats for:&nbsp;
                 <select
                   value={selectedGame.key}
-                  onChange={e =>
-                    setSelectedGame(
-                      gameOptions.find(o => o.key === e.target.value)
-                    )
-                  }
+                  onChange={e => setSelectedGame(
+                    gameOptions.find(o => o.key === e.target.value)
+                  )}
                 >
                   {gameOptions.map(o => (
-                    <option key={o.key} value={o.key}>
-                      {o.label}
-                    </option>
+                    <option key={o.key} value={o.key}>{o.label}</option>
                   ))}
                 </select>
               </label>
-              {/* ← new live-search input */}
-              <input
-                type="text"
-                placeholder="Search players…"
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                className="player-search-input"
-              />
             </div>
           </div>
+  
           <div className="panel-scroll">
             <table className="admin-table">
               <thead>
@@ -219,49 +212,47 @@ export default function Admin() {
               </thead>
               <tbody>
                 {filteredPlayers.map(p => {
-                  const status = p.banned
-                    ? 'banned'
-                    : p.flagged
-                    ? 'flagged'
-                    : 'active'
+                  const status = p.banned ? 'banned' : p.flagged ? 'flagged' : 'active';
                   return (
                     <tr key={p.id}>
-                      <td>
-                        <span
-                          className={`status-indicator status-${status}`}
-                        />
-                      </td>
+                      <td><span className={`status-indicator status-${status}`} /></td>
                       <td>{p.displayName || '—'}</td>
                       <td>{p.email || '—'}</td>
                       <td>{p[selectedGame.elo] ?? 0}</td>
                       <td>{p[selectedGame.wins] ?? 0}</td>
                       <td>{p[selectedGame.losses] ?? 0}</td>
                       <td className="action-cell">
-                        <Settings
-                          className="gear-icon"
-                          onClick={() => toggleDropdown(p.id)}
-                        />
-                        {/* …actions dropdown as before… */}
+                        <Settings className="gear-icon" onClick={() => toggleDropdown(p.id)} />
+                        {dropdownOpenId === p.id && (
+                          <ul className="dropdown-menu">
+                            {status === 'active' && <li onClick={() => onFlag(p)}>Flag</li>}
+                            {status === 'flagged' && (
+                              <>
+                                <li onClick={() => onUnflag(p)}>Unflag</li>
+                                {/* <li onClick={() => onBanClick(p)}>Ban</li> */}
+                              </>
+                            )}
+                            {(status === 'active' || status === 'flagged') && <li onClick={() => onBanClick(p)}>Ban</li>}
+                            {status === 'banned' && <li onClick={() => onUnban(p)}>Unban</li>}
+                          </ul>
+                        )}
                       </td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
           </div>
         </div>
-
-        {/* Inbox Panel */}
+  
+        {/* ── Inbox Panel ── */}
         <div className="panel">
           <div className="panel-header">
             <h3>Inbox</h3>
             <div className="inbox-filter">
               <label>
                 Show:&nbsp;
-                <select
-                  value={filterType}
-                  onChange={e => setFilterType(e.target.value)}
-                >
+                <select value={filterType} onChange={e => setFilterType(e.target.value)}>
                   <option value="all">All</option>
                   <option value="reports">Reports</option>
                   <option value="disputes">Disputes</option>
@@ -270,92 +261,77 @@ export default function Admin() {
             </div>
           </div>
           <div className="panel-scroll">
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th></th>           {/* unread indicator */}
-                <th>Date</th>
-                <th>Time</th>
-                <th>Type</th>
-                <th>Dismiss</th>
-              </tr>
-            </thead>
-            <tbody>
-              {displayedInbox.map(item => {
-                const ts = (item.date || item.createdAt).toDate()
-                return (
-                  <tr key={item.id} onClick={() => openItem(item)}>
-                    {/* 1) Unread dot or empty */}
-                    <td>
-                      {!item.read && <span className="unread-dot" />}
-                    </td>
-                    {/* 2) Date */}
-                    <td>{ts.toLocaleDateString()}</td>
-                    {/* 3) Time */}
-                    <td>{ts.toLocaleTimeString()}</td>
-                    {/* 4) Type literal */}
-                    <td>{item.type}</td>
-                    {/* 5) Dismiss button */}
-                    <td>
-                      <button
-                        className="dismiss-button"
-                        onClick={e => {
-                          e.stopPropagation()
-                          dismissItem(item)
-                        }}
-                      >
-                        ✕
-                      </button>
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Type</th>
+                  <th>Dismiss</th>
+                </tr>
+              </thead>
+              <tbody>
+                {displayedInbox.map(item => {
+                  const ts = (item.date || item.createdAt).toDate();
+                  return (
+                    <tr key={item.id} onClick={() => openItem(item)}>
+                      <td>{!item.read && <span className="unread-dot" />}</td>
+                      <td>{ts.toLocaleDateString()}</td>
+                      <td>{ts.toLocaleTimeString()}</td>
+                      <td>{item.type}</td>
+                      <td>
+                        <button
+                          className="dismiss-button"
+                          onClick={e => {
+                            e.stopPropagation();
+                            dismissItem(item);
+                          }}
+                        >
+                          ✕
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-
-      {/* Item Detail Modal */}
+  
+      {/* ── Ban Confirmation Modal ── */}
+      {showBanModal && banTarget && (
+        <div className="modal-backdrop" onClick={() => setShowBanModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <p>Ban <strong>{banTarget.displayName || banTarget.email}</strong>?</p>
+            <div className="modal-actions">
+              <button onClick={() => setShowBanModal(false)}>Cancel</button>
+              <button onClick={confirmBan}>Yes, Ban</button>
+            </div>
+          </div>
+        </div>
+      )}
+  
+      {/* ── Item Detail Modal ── */}
       {showModal && modalItem && (
         <div className="modal-backdrop" onClick={() => setShowModal(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             {modalItem.type === 'Dispute' ? (
               <>
                 <h3>Dispute Detail</h3>
-                <p><strong>User:</strong>{' '}
-                  <button
-                    className="link-button"
-                    onClick={() => showStats(modalItem.userId)}
-                  >
-                    {getPlayerById(modalItem.userId).displayName}
-                  </button>
-                </p>
+                <p><strong>User:</strong>{' '}<button className="link-button" onClick={() => showStats(modalItem.userId)}>{getPlayerName(modalItem.userId)}</button></p>
                 <p><strong>Claim:</strong> {modalItem.claim}</p>
                 <div className="modal-actions">
                   <button onClick={() => setShowModal(false)}>Close</button>
-                  <button onClick={() => {/* unban logic */}}>Unban</button>
+                  <button onClick={() => unbanUser(modalItem)}>Unban</button>
                 </div>
               </>
             ) : (
-              <>  {/* Report Detail */}
+              <>
                 <h3>Report Detail</h3>
-                <p><strong>Accuser:</strong>{' '}
-                  <button
-                    className="link-button"
-                    onClick={() => showStats(modalItem.accuserId)}
-                  >
-                    {getPlayerById(modalItem.accuserId).displayName}
-                  </button>
-                </p>
-                <p><strong>Accused:</strong>{' '}
-                  <button
-                    className="link-button"
-                    onClick={() => showStats(modalItem.accusedId)}
-                  >
-                    {getPlayerById(modalItem.accusedId).displayName}
-                  </button>
-                </p>
+                <p><strong>Accuser:</strong> <button className="link-button" onClick={e => { e.stopPropagation(); showStats(modalItem.userId); }}>{getPlayerById(modalItem.userId).displayName}</button></p>
+                <p><strong>Accused:</strong> <button className="link-button" onClick={e => { e.stopPropagation(); showStats(modalItem.playerId); }}>{getPlayerById(modalItem.playerId).displayName}</button></p>
                 <p><strong>Reason:</strong> {modalItem.reason}</p>
                 <div className="modal-actions">
                   <button onClick={() => setShowModal(false)}>Close</button>
@@ -365,21 +341,21 @@ export default function Admin() {
           </div>
         </div>
       )}
-
-      {/* Stats Modal */}
+  
+      {/* ── Stats Modal ── */}
       {showStatsModal && statsTarget && (
         <div className="modal-backdrop" onClick={() => setShowStatsModal(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <h3>{statsTarget.displayName || statsTarget.email}’s Stats</h3>
             <p>Chess ELO: {statsTarget.chessElo}</p>
             <p>Chess Wins: {statsTarget.chessWins}</p>
-            <p>Chess Losses: {statsTarget.chessLosses}</p>
+            <p>Chess Losses: {statsTarget.chessLoses}</p>
             <p>RPS ELO: {statsTarget.rpsElo}</p>
             <p>RPS Wins: {statsTarget.rpsWins}</p>
-            <p>RPS Losses: {statsTarget.rpsLosses}</p>
+            <p>RPS Losses: {statsTarget.rpsLoses}</p>
             <p>RNG ELO: {statsTarget.rngElo}</p>
             <p>RNG Wins: {statsTarget.rngWins}</p>
-            <p>RNG Losses: {statsTarget.rngLosses}</p>
+            <p>RNG Losses: {statsTarget.rngLoses}</p>
             <div className="modal-actions">
               <button onClick={() => setShowStatsModal(false)}>Close</button>
             </div>
@@ -387,5 +363,5 @@ export default function Admin() {
         </div>
       )}
     </div>
-  )
+  )  
 }
