@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
 import { firestore } from '../../firebase/firebase';
-import './Leaderboard.css'; // ← Add this import
+import './Leaderboard.css'; 
 
 const Leaderboard = () => {
     const [gameType, setGameType] = useState('chessElo');
     const [leaders, setLeaders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedPlayer, setSelectedPlayer] = useState(null);
+
 
     const gameOptions = [
         { label: 'Chess', value: 'chessElo' },
@@ -62,13 +64,26 @@ const Leaderboard = () => {
             ) : (
                 <div className="leaderboard-scroll-container">
                     <ol key={gameType} className="leaderboard-list fade-in">
-                        {leaders.map((player, index) => (
-                            <li key={player.id}>
-                                <span>{index + 1}. {player.displayName || 'Unnamed'}</span>
-                                <span>{player[gameType] || 1000}</span>
-                            </li>
-                        ))}
+                    {leaders.map((player, index) => (
+                        <li
+                        key={player.id}
+                        className="leaderboard-player"
+                        onClick={() => setSelectedPlayer(player)}
+                        >
+                        <span>{index + 1}. {player.displayName || 'Unnamed'}</span>
+                        <span>{player[gameType] || 1000}</span>
+                        </li>
+                    ))}
                     </ol>
+
+                    {selectedPlayer && (
+                        <div className="player-popup-card fade-in">
+                            <h3>{selectedPlayer.displayName || 'Unnamed'}'s Stats</h3>
+                            <p><strong>Wins:</strong> {selectedPlayer[`${gameType.replace('Elo', '')}Wins`] ?? 0}</p>
+                            <p><strong>Losses:</strong> {selectedPlayer[`${gameType.replace('Elo', '')}Loses`] ?? 0}</p>
+                            <button onClick={() => setSelectedPlayer(null)}>Close</button>
+                        </div>
+                        )}
                 </div>
             )}
 
