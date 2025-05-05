@@ -291,98 +291,72 @@ export default function Admin() {
         </div>
       </div>
 
-      {/* ── Ban Confirmation Modal ── */}
-      {showBanModal && banTarget && (
-        <div className="modal-backdrop" onClick={()=>setShowBanModal(false)}>
-          <div className="modal-content" onClick={e=>e.stopPropagation()}>
-            <p>Ban <strong>{banTarget.displayName||banTarget.email}</strong>?</p>
-            <div className="modal-actions">
-              <button onClick={()=>setShowBanModal(false)}>Cancel</button>
-              <button onClick={confirmBan}>Yes, Ban</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── Item Detail Modal ── */}
+      {/* Item Detail Modal */}
       {showModal && modalItem && (
-        <div className="modal-backdrop" onClick={()=>setShowModal(false)}>
-          <div className="modal-content" onClick={e=>e.stopPropagation()}>
-            {modalItem.type==='Dispute' ? (
+        <div className="modal-backdrop" onClick={() => setShowModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            {modalItem.type === 'Dispute' ? (
               <>
                 <h3>Dispute Detail</h3>
                 <p><strong>User:</strong>{' '}
-                  <button 
-                    className="link-button" 
-                    onClick={()=>showStats(modalItem.userId)}
+                  <button
+                    className="link-button"
+                    onClick={() => showStats(modalItem.userId)}
                   >
-                    {getplayerName(modalItem.userId)}
+                    {getPlayerById(modalItem.userId).displayName}
                   </button>
                 </p>
                 <p><strong>Claim:</strong> {modalItem.claim}</p>
                 <div className="modal-actions">
-                  <button onClick={()=>setShowModal(false)}>Close</button>
-                  <button onClick={()=>unbanUser(modalItem)}>Unban</button>
+                  <button onClick={() => setShowModal(false)}>Close</button>
+                  <button onClick={() => {/* unban logic */}}>Unban</button>
                 </div>
               </>
             ) : (
-                <>
-            <h3>Report Detail</h3>
+              <>  {/* Report Detail */}
+                <h3>Report Detail</h3>
+                <p><strong>Accuser:</strong>{' '}
+                  <button
+                    className="link-button"
+                    onClick={() => showStats(modalItem.accuserId)}
+                  >
+                    {getPlayerById(modalItem.accuserId).displayName}
+                  </button>
+                </p>
+                <p><strong>Accused:</strong>{' '}
+                  <button
+                    className="link-button"
+                    onClick={() => showStats(modalItem.accusedId)}
+                  >
+                    {getPlayerById(modalItem.accusedId).displayName}
+                  </button>
+                </p>
+                <p><strong>Reason:</strong> {modalItem.reason}</p>
+                <div className="modal-actions">
+                  <button onClick={() => setShowModal(false)}>Close</button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
-            {/* Accuser */}
-            <p>
-              <strong>Accuser:</strong>{' '}
-              <button
-                className="link-button"
-                onClick={e => {
-                  e.stopPropagation();
-                  showStats(modalItem.userId);
-                }}
-              >
-                {getPlayerById(modalItem.userId).displayName}
-              </button>
-            </p>
-
-            {/* Accused */}
-            <p>
-              <strong>Accused:</strong>{' '}
-              <button
-                className="link-button"
-                onClick={e => {
-                  e.stopPropagation();
-                  showStats(modalItem.playerId);
-                }}
-              >
-                {getPlayerById(modalItem.playerId).displayName}
-              </button>
-            </p>
-
-            <p><strong>Reason:</strong> {modalItem.reason}</p>
-            <div className="modal-actions">
-              <button onClick={() => setShowModal(false)}>Close</button>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-  )}
-
-      {/* ── Stats Modal ── */}
+      {/* Stats Modal */}
       {showStatsModal && statsTarget && (
-        <div className="modal-backdrop" onClick={()=>setShowStatsModal(false)}>
-          <div className="modal-content" onClick={e=>e.stopPropagation()}>
-            <h3>{statsTarget.displayName||statsTarget.email}’s Stats</h3>
+        <div className="modal-backdrop" onClick={() => setShowStatsModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <h3>{statsTarget.displayName || statsTarget.email}’s Stats</h3>
             <p>Chess ELO: {statsTarget.chessElo}</p>
             <p>Chess Wins: {statsTarget.chessWins}</p>
-            <p>Chess Losses: {statsTarget.chessLoses}</p>
+            <p>Chess Losses: {statsTarget.chessLosses}</p>
             <p>RPS ELO: {statsTarget.rpsElo}</p>
             <p>RPS Wins: {statsTarget.rpsWins}</p>
-            <p>RPS Losses: {statsTarget.rpsLoses}</p>
+            <p>RPS Losses: {statsTarget.rpsLosses}</p>
             <p>RNG ELO: {statsTarget.rngElo}</p>
             <p>RNG Wins: {statsTarget.rngWins}</p>
-            <p>RNG Losses: {statsTarget.rngLoses}</p>
+            <p>RNG Losses: {statsTarget.rngLosses}</p>
             <div className="modal-actions">
-              <button onClick={()=>setShowStatsModal(false)}>Close</button>
+              <button onClick={() => setShowStatsModal(false)}>Close</button>
             </div>
           </div>
         </div>
