@@ -45,7 +45,7 @@ const Header = () => {
           </button>
         </div>
         <div className="navbar-center">
-          <Link to="/" className="navbar-brand">Bad Bishop</Link>
+          <Link to="/" className="navbar-brand">Elo Tracker</Link>
         </div>
         <div className="navbar-right">
           {userLoggedIn ? (
