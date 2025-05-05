@@ -17,6 +17,7 @@
   margin-bottom: 40px;
 }
 
+
 .game-grid {
   display: flex;
   flex-wrap: wrap;
@@ -44,3 +45,22 @@
   transform: translateY(-5px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
+
+.rps-card {
+  background-image: url('/images/rps2.gif');
+  background-size: contain;
+  background-position: center;
+}
+
+.chess-card {
+  background-image: url('/images/chess.gif');
+  background-size: contain;
+  background-position: center;
+}
+
+.rng-card {
+  background-image: url('/images/matrix.gif.webp');
+  background-size: contain;
+  background-position: center;
+}
+

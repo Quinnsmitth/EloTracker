@@ -11,9 +11,9 @@ const Home = () => {
         Hello {currentUser.displayName ? currentUser.displayName : currentUser.email}, you are now logged in.
       </p>
       <div className="game-grid">
-        <Link to="/rps" className="game-card">Rock Paper Scissors</Link>
-        <Link to="/chess" className="game-card">Chess</Link>
-        <Link to="/rng" className="game-card">Random Number Guesser</Link>
+        <Link to="/rps" className="game-card rps-card">Rock Paper Scissors</Link>
+        <Link to="/chess" className="game-card chess-card">Chess</Link>
+        <Link to="/rng" className="game-card rng-card">Random Number Guesser</Link>
       </div>
     </div>
   )
