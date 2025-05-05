@@ -315,24 +315,49 @@ export default function Admin() {
   
       {/* ── Item Detail Modal ── */}
       {showModal && modalItem && (
+        console.log("REPORT ITEM",modalItem),
         <div className="modal-backdrop" onClick={() => setShowModal(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             {modalItem.type === 'Dispute' ? (
               <>
                 <h3>Dispute Detail</h3>
-                <p><strong>User:</strong>{' '}<button className="link-button" onClick={() => showStats(modalItem.userId)}>{getPlayerName(modalItem.userId)}</button></p>
+                <p><strong>User:</strong>{' '}<button className="link-button" onClick={() => showStats(modalItem.userId)}>{getplayerName(modalItem.userId)}</button></p>
                 <p><strong>Claim:</strong> {modalItem.claim}</p>
                 <div className="modal-actions">
                   <button onClick={() => setShowModal(false)}>Close</button>
                   <button onClick={() => unbanUser(modalItem)}>Unban</button>
                 </div>
               </>
-            ) : (
-              <>
-                <h3>Report Detail</h3>
-                <p><strong>Accuser:</strong> <button className="link-button" onClick={e => { e.stopPropagation(); showStats(modalItem.userId); }}>{getPlayerById(modalItem.userId).displayName}</button></p>
-                <p><strong>Accused:</strong> <button className="link-button" onClick={e => { e.stopPropagation(); showStats(modalItem.playerId); }}>{getPlayerById(modalItem.playerId).displayName}</button></p>
+                  ) : (
+                    <>
+                      <p>
+                  <strong>Accuser:</strong>{' '}
+                  <button
+                    className="link-button"
+                    onClick={e => {
+                      e.stopPropagation();
+                      showStats(modalItem.accuserId);
+                    }}
+                  >
+                    {getplayerName(modalItem.accuserId)}
+                  </button>
+                </p>
+
+                <p>
+                  <strong>Accused:</strong>{' '}
+                  <button
+                    className="link-button"
+                    onClick={e => {
+                      e.stopPropagation();
+                      showStats(modalItem.accusedId);
+                    }}
+                  >
+                    {getplayerName(modalItem.accusedId)}
+                  </button>
+                </p>
+
                 <p><strong>Reason:</strong> {modalItem.reason}</p>
+
                 <div className="modal-actions">
                   <button onClick={() => setShowModal(false)}>Close</button>
                 </div>
@@ -341,7 +366,7 @@ export default function Admin() {
           </div>
         </div>
       )}
-  
+
       {/* ── Stats Modal ── */}
       {showStatsModal && statsTarget && (
         <div className="modal-backdrop" onClick={() => setShowStatsModal(false)}>
@@ -349,13 +374,13 @@ export default function Admin() {
             <h3>{statsTarget.displayName || statsTarget.email}’s Stats</h3>
             <p>Chess ELO: {statsTarget.chessElo}</p>
             <p>Chess Wins: {statsTarget.chessWins}</p>
-            <p>Chess Losses: {statsTarget.chessLoses}</p>
+            <p>Chess Losses: {statsTarget.chessLosses}</p>
             <p>RPS ELO: {statsTarget.rpsElo}</p>
             <p>RPS Wins: {statsTarget.rpsWins}</p>
-            <p>RPS Losses: {statsTarget.rpsLoses}</p>
-            <p>RNG ELO: {statsTarget.rngElo}</p>
-            <p>RNG Wins: {statsTarget.rngWins}</p>
-            <p>RNG Losses: {statsTarget.rngLoses}</p>
+            <p>RPS Losses: {statsTarget.rpsLosses}</p>
+            <p>Number Guesser ELO: {statsTarget.numberGuesserElo}</p>
+            <p>Number Guesser Wins: {statsTarget.numberGuesserWins}</p>
+            <p>Number Guesser Losses: {statsTarget.numberGuesserLosses}</p>
             <div className="modal-actions">
               <button onClick={() => setShowStatsModal(false)}>Close</button>
             </div>
