@@ -8,7 +8,7 @@ const UnityGame = () => {
 
   const loadUnity = async () => {
     if (isLoading || isLoaded || window.unityInstance) {
-      console.log('— exiting early (already loading/loaded or instance exists)');
+      console.log('exiting early (already loading/loaded or instance exists)');
       return;
     }
     setIsLoading(true);
@@ -16,7 +16,7 @@ const UnityGame = () => {
     const script = document.createElement('script');
     script.src = '/UnityGame2/Build/UnityGame2.loader.js';  // Ensure path is correct
     script.onload = () => {
-      console.log('— loader script loaded');
+      console.log('loader script loaded');
 
       window
           .createUnityInstance(unityCanvasRef.current, {  // Use the canvas reference
@@ -45,7 +45,7 @@ const UnityGame = () => {
       setIsLoading(false);
     };
 
-    console.log('— appending <script> to DOM');
+    console.log('appending <script> to DOM');
     document.body.appendChild(script);
   };
 
@@ -53,7 +53,7 @@ const UnityGame = () => {
     return () => {
       if (window.unityInstance) {
         window.unityInstance.Quit().then(() => {
-          console.log('🗑️ Unity instance quit');
+          console.log(' Unity instance quit');
           delete window.unityInstance;
         });
       }
